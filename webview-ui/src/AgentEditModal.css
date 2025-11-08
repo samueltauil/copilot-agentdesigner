@@ -1,0 +1,78 @@
+.agent-edit-modal {
+  width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.agent-edit-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-group label .required {
+  color: var(--vscode-errorForeground);
+  margin-left: 4px;
+}
+
+.form-group label .char-count {
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border);
+  padding: 6px 8px;
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+  border-radius: 2px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  border-color: var(--vscode-focusBorder);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--vscode-errorForeground);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: var(--vscode-editor-font-family);
+}
+
+.error-message {
+  color: var(--vscode-errorForeground);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.help-text {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+}

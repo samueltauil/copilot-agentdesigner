@@ -1,0 +1,137 @@
+{
+  "name": "copilot-agentdesigner",
+  "displayName": "Agent Designer",
+  "description": "Visual canvas for designing multi-agent workflows. Create, connect, and export GitHub Copilot agents with an intuitive drag-and-drop interface.",
+  "version": "0.4.1",
+  "publisher": "TODO-publisher-name",
+  "author": {
+    "name": "Samuel Tauil"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samueltauil/copilot-agentdesigner"
+  },
+  "bugs": {
+    "url": "https://github.com/samueltauil/copilot-agentdesigner/issues"
+  },
+  "homepage": "https://github.com/samueltauil/copilot-agentdesigner#readme",
+  "keywords": [
+    "copilot",
+    "agent",
+    "ai",
+    "workflow",
+    "visual",
+    "designer",
+    "multi-agent",
+    "handoff",
+    "canvas"
+  ],
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "agentDesigner.canvas",
+        "displayName": "Agent Designer Canvas",
+        "selector": [
+          {
+            "filenamePattern": "*.agentdesign.md"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "agentDesigner.openFile",
+          "when": "resourceFilename =~ /\\.agentdesign\\.md$/",
+          "group": "navigation"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "agentDesigner.openAsText",
+          "when": "resourceFilename =~ /\\.agentdesign\\.md$/",
+          "group": "1_open"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "agentDesigner.open",
+        "title": "Agent Designer: Open Canvas"
+      },
+      {
+        "command": "agentDesigner.openFile",
+        "title": "Agent Designer: Open Design File"
+      },
+      {
+        "command": "agentDesigner.newFromTemplate",
+        "title": "Agent Designer: New From Template"
+      },
+      {
+        "command": "agentDesigner.export",
+        "title": "Agent Designer: Export Agents"
+      },
+      {
+        "command": "agentDesigner.import",
+        "title": "Agent Designer: Import Agents"
+      },
+      {
+        "command": "agentDesigner.simulate",
+        "title": "Agent Designer: Run Simulation"
+      },
+      {
+        "command": "agentDesigner.toggleEntryPoint",
+        "title": "Agent Designer: Toggle Entry Point"
+      },
+      {
+        "command": "agentDesigner.customizeTheme",
+        "title": "Agent Designer: Customize Theme"
+      },
+      {
+        "command": "agentDesigner.openAsText",
+        "title": "Agent Designer: Open as Text"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile && npm run compile:webview",
+    "compile": "tsc -p ./",
+    "compile:webview": "node build-webview.js",
+    "watch": "tsc -watch -p ./",
+    "watch:webview": "node build-webview.js --watch",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/vscode": "^1.105.0",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.36.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.9.2",
+    "elkjs": "^0.11.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
