@@ -2,7 +2,13 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-0.4.1-green.svg)](https://github.com/samueltauil/copilot-agentdesigner)
-[![GitHub](https://img.shields.io/github/stars/samueltauil/copilot-agentdesigner?style=social)](https://github.com/samueltauil/copilot-agentdesigner)
+[![VS Code](https://img.shields.io/badge/VS%20Code-1.105.0+-blue.svg)](https://code.visualstudio.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/samueltauil/copilot-agentdesigner/pulls)
+[![GitHub Stars](https://img.shields.io/github/stars/samueltauil/copilot-agentdesigner?style=social)](https://github.com/samueltauil/copilot-agentdesigner)
+[![GitHub Issues](https://img.shields.io/github/issues/samueltauil/copilot-agentdesigner)](https://github.com/samueltauil/copilot-agentdesigner/issues)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/samueltauil/copilot-agentdesigner)
 
 A powerful visual canvas extension for designing multi-agent workflows. Create, connect, and export GitHub Copilot agents with an intuitive drag-and-drop interface.
 
