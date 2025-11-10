@@ -10,7 +10,8 @@ export class AgentDesignerPanel {
     private _disposables: vscode.Disposable[] = [];
     private _autoSaveTimeout: NodeJS.Timeout | undefined;
     private _canvasState: CanvasState | undefined;
-    private _stateFilePath: string;
+    private _stateFilePath: string = '';
+    private _needsAutoImport: boolean = false;
 
     public static createOrShow(extensionUri: vscode.Uri, stateFilePath?: string) {
         const column = vscode.window.activeTextEditor
@@ -57,7 +58,16 @@ export class AgentDesignerPanel {
         } else {
             const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
             if (!workspaceFolder) {
-                throw new Error('No workspace folder open');
+                vscode.window.showErrorMessage(
+                    'No workspace folder open. Please open a folder to use Agent Designer.',
+                    'Open Folder'
+                ).then(selection => {
+                    if (selection === 'Open Folder') {
+                        vscode.commands.executeCommand('vscode.openFolder');
+                    }
+                });
+                this.dispose();
+                return;
             }
             this._stateFilePath = path.join(
                 workspaceFolder.uri.fsPath,
@@ -65,6 +75,13 @@ export class AgentDesignerPanel {
                 'agentflow',
                 '.agentdesign.md'
             );
+        }
+
+        // Check if we need to auto-import existing agents
+        const checkResult = this._checkForExistingAgents();
+        if (checkResult.needsImport && checkResult.agentCount > 0) {
+            this._needsAutoImport = true;
+            console.log(`[AgentDesigner] Found ${checkResult.agentCount} existing agents in: ${checkResult.sources.join(', ')}`);
         }
 
         // Set the webview's initial html content first
@@ -112,11 +129,144 @@ export class AgentDesignerPanel {
                     case 'addFromFile':
                         this._handleAddFromFile();
                         break;
+                    case 'checkForAgents':
+                        this._handleCheckForAgents();
+                        break;
+                    case 'importExisting':
+                        this._handleImportExisting();
+                        break;
                 }
             },
             null,
             this._disposables
         );
+    }
+
+    private _checkForExistingAgents(): { needsImport: boolean; agentCount: number; sources: string[] } {
+        const result = { needsImport: false, agentCount: 0, sources: [] as string[] };
+
+        // If design file already exists, no need to auto-import
+        if (fs.existsSync(this._stateFilePath)) {
+            console.log('[AgentDesigner] Design file exists, skipping auto-import check');
+            return result;
+        }
+
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) {
+            return result;
+        }
+
+        const agentsPath = path.join(workspaceFolder.uri.fsPath, '.github', 'agents');
+        const chatmodesPath = path.join(workspaceFolder.uri.fsPath, '.github', 'chatmodes');
+
+        let totalAgents = 0;
+
+        // Check .github/agents
+        if (fs.existsSync(agentsPath)) {
+            const AgentFileParser = require('./generators/agentFileParser').AgentFileParser;
+            const parseResult = AgentFileParser.parseDirectory(agentsPath);
+            if (parseResult.agents.length > 0) {
+                totalAgents += parseResult.agents.length;
+                result.sources.push('.github/agents');
+                console.log(`[AgentDesigner] Found ${parseResult.agents.length} agents in .github/agents`);
+            }
+        }
+
+        // Check .github/chatmodes
+        if (fs.existsSync(chatmodesPath)) {
+            const AgentFileParser = require('./generators/agentFileParser').AgentFileParser;
+            const parseResult = AgentFileParser.parseDirectory(chatmodesPath);
+            if (parseResult.agents.length > 0) {
+                totalAgents += parseResult.agents.length;
+                result.sources.push('.github/chatmodes');
+                console.log(`[AgentDesigner] Found ${parseResult.agents.length} agents in .github/chatmodes`);
+            }
+        }
+
+        result.agentCount = totalAgents;
+        result.needsImport = totalAgents > 0;
+
+        return result;
+    }
+
+    private _autoDiscoverAgents(): number {
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return 0;
+        }
+
+        const AgentFileParser = require('./generators/agentFileParser').AgentFileParser;
+        const agentsPath = path.join(workspaceFolder.uri.fsPath, '.github', 'agents');
+        const chatmodesPath = path.join(workspaceFolder.uri.fsPath, '.github', 'chatmodes');
+
+        let allParsedAgents: any[] = [];
+        let allFileNames: string[] = [];
+
+        // Parse agents from .github/agents
+        if (fs.existsSync(agentsPath)) {
+            const result = AgentFileParser.parseDirectory(agentsPath);
+            allParsedAgents = allParsedAgents.concat(result.agents);
+            allFileNames = allFileNames.concat(result.fileNames);
+            console.log(`[AgentDesigner] Auto-loaded ${result.agents.length} agents from .github/agents`);
+        }
+
+        // Parse agents from .github/chatmodes
+        if (fs.existsSync(chatmodesPath)) {
+            const result = AgentFileParser.parseDirectory(chatmodesPath);
+            allParsedAgents = allParsedAgents.concat(result.agents);
+            allFileNames = allFileNames.concat(result.fileNames);
+            console.log(`[AgentDesigner] Auto-loaded ${result.agents.length} agents from .github/chatmodes`);
+        }
+
+        if (allParsedAgents.length === 0) {
+            return 0;
+        }
+
+        // Convert to canvas agents with 250px grid spacing, passing filenames for handoff resolution
+        const canvasAgents = AgentFileParser.toCanvasAgents(allParsedAgents, allFileNames);
+        
+        // Apply 250px grid layout
+        canvasAgents.forEach((agent: any, index: number) => {
+            agent.position = {
+                x: 100 + (index % 3) * 250,
+                y: 100 + Math.floor(index / 3) * 250
+            };
+        });
+
+        // Log handoffs for debugging
+        console.log(`[AgentDesigner] Canvas agents with handoffs:`);
+        canvasAgents.forEach((agent: any) => {
+            console.log(`  - ${agent.name}: ${agent.handoffs?.length || 0} handoffs`, agent.handoffs);
+        });
+
+        // Update canvas state
+        if (this._canvasState) {
+            this._canvasState.agents = canvasAgents;
+            this._saveState();
+            console.log(`[AgentDesigner] Auto-imported ${canvasAgents.length} agents to canvas`);
+        }
+
+        return canvasAgents.length;
+    }
+
+    private _handleCheckForAgents() {
+        const checkResult = this._checkForExistingAgents();
+        this._panel.webview.postMessage({
+            type: 'agentCheckResult',
+            agentCount: checkResult.agentCount,
+            sources: checkResult.sources
+        });
+    }
+
+    private _handleImportExisting() {
+        const loadedCount = this._autoDiscoverAgents();
+        if (loadedCount > 0) {
+            vscode.window.showInformationMessage(`Loaded ${loadedCount} existing agent${loadedCount > 1 ? 's' : ''} from workspace`);
+            this._sendStateToWebview();
+        } else {
+            vscode.window.showInformationMessage('No agent files found in workspace');
+        }
     }
 
     private _loadState() {
@@ -169,6 +319,29 @@ export class AgentDesignerPanel {
                 preferences: DEFAULT_PREFERENCES,
                 workflowDescription: ''
             };
+
+            // Auto-import existing agents if needed
+            if (this._needsAutoImport && this._canvasState.agents.length === 0) {
+                console.log('[AgentDesigner] Triggering auto-import of existing agents');
+                const loadedCount = this._autoDiscoverAgents();
+                
+                if (loadedCount > 0) {
+                    vscode.window.showInformationMessage(
+                        `Loaded ${loadedCount} existing agent${loadedCount > 1 ? 's' : ''} from workspace`,
+                        'Undo'
+                    ).then(selection => {
+                        if (selection === 'Undo') {
+                            // Clear agents and reset state
+                            if (this._canvasState) {
+                                this._canvasState.agents = [];
+                                this._sendStateToWebview();
+                                this._saveState();
+                                console.log('[AgentDesigner] Auto-import undone by user');
+                            }
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -333,16 +506,16 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
             console.log(`[AgentDesigner] Scanning directory: ${dirPath}`);
 
             // Parse all agent files in directory
-            const parsedAgents = AgentFileParser.parseDirectory(dirPath);
-            console.log(`[AgentDesigner] Found ${parsedAgents.length} agent files`);
+            const parseResult = AgentFileParser.parseDirectory(dirPath);
+            console.log(`[AgentDesigner] Found ${parseResult.agents.length} agent files`);
 
-            if (parsedAgents.length === 0) {
+            if (parseResult.agents.length === 0) {
                 vscode.window.showInformationMessage('No agent files found in directory');
                 return;
             }
 
             // Convert to canvas agents with handoffs resolved
-            const canvasAgents = AgentFileParser.toCanvasAgents(parsedAgents);
+            const canvasAgents = AgentFileParser.toCanvasAgents(parseResult.agents, parseResult.fileNames);
             console.log(`[AgentDesigner] Converted to ${canvasAgents.length} canvas agents`);
 
             // Update canvas state

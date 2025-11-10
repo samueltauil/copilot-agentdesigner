@@ -31061,6 +31061,8 @@
     const [showSettings, setShowSettings] = (0, import_react9.useState)(false);
     const [validationIssues, setValidationIssues] = (0, import_react9.useState)([]);
     const [state, setState] = (0, import_react9.useState)(null);
+    const [showImportBanner, setShowImportBanner] = (0, import_react9.useState)(false);
+    const [importBannerMessage, setImportBannerMessage] = (0, import_react9.useState)("");
     const reactFlowInstance = (0, import_react9.useRef)(null);
     (0, import_react9.useEffect)(() => {
       vscode.postMessage({ type: "getState" });
@@ -31097,6 +31099,12 @@
               saveState();
             }
             break;
+          case "agentCheckResult":
+            if (message.agentCount > 0 && nodes.length === 0) {
+              setShowImportBanner(true);
+              setImportBannerMessage(`Found ${message.agentCount} agent file${message.agentCount > 1 ? "s" : ""} in ${message.sources.join(", ")}`);
+            }
+            break;
         }
       };
       window.addEventListener("message", messageHandler);
@@ -31106,7 +31114,8 @@
       console.log(`[Webview] loadStateToCanvas called with ${canvasState.agents?.length || 0} agents`);
       setState(canvasState);
       if (!canvasState.agents || canvasState.agents.length === 0) {
-        console.log("[Webview] No agents to load");
+        console.log("[Webview] No agents to load, checking for existing agents");
+        vscode.postMessage({ type: "checkForAgents" });
         return;
       }
       const newNodes = canvasState.agents.map((agent) => ({
@@ -31416,6 +31425,53 @@
         /* @__PURE__ */ import_react9.default.createElement(Controls, null),
         /* @__PURE__ */ import_react9.default.createElement(Panel, { position: "top-left" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react9.default.createElement("button", { onClick: addNewAgent }, "Add Agent"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleAddFromFile }, "Add from File"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: applyAutoLayout }, "Auto Layout"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleExport }, "Export"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleImport }, "Import Files"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleImportDirectory }, "Load from Directory"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: () => setShowSettings(true) }, "Settings")))
       ),
+      showImportBanner && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+        position: "fixed",
+        top: "10px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        backgroundColor: "#007acc",
+        color: "white",
+        padding: "12px 20px",
+        borderRadius: "4px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        zIndex: 1e3
+      } }, /* @__PURE__ */ import_react9.default.createElement("span", null, importBannerMessage), /* @__PURE__ */ import_react9.default.createElement(
+        "button",
+        {
+          onClick: () => {
+            vscode.postMessage({ type: "importExisting" });
+            setShowImportBanner(false);
+          },
+          style: {
+            backgroundColor: "white",
+            color: "#007acc",
+            border: "none",
+            padding: "6px 12px",
+            borderRadius: "3px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }
+        },
+        "Load Now"
+      ), /* @__PURE__ */ import_react9.default.createElement(
+        "button",
+        {
+          onClick: () => setShowImportBanner(false),
+          style: {
+            backgroundColor: "transparent",
+            color: "white",
+            border: "1px solid white",
+            padding: "6px 12px",
+            borderRadius: "3px",
+            cursor: "pointer"
+          }
+        },
+        "Dismiss"
+      )),
       showHandoffModal && selectedEdge && /* @__PURE__ */ import_react9.default.createElement(
         HandoffModal,
         {
