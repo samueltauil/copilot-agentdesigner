@@ -18,6 +18,8 @@ import { HandoffModal } from './HandoffModal';
 import { AgentEditModal } from './AgentEditModal';
 import { ValidationPanel } from './ValidationPanel';
 import { SettingsPanel } from './SettingsPanel';
+import { ConfirmDialog } from './ConfirmDialog';
+import { EdgeContextMenu } from './EdgeContextMenu';
 import { applyElkLayout } from './layout';
 import './App.css';
 
@@ -48,6 +50,9 @@ export function App() {
   const [showImportBanner, setShowImportBanner] = useState(false);
   const [importBannerMessage, setImportBannerMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [edgeToDelete, setEdgeToDelete] = useState<Edge | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edge: Edge } | null>(null);
   const reactFlowInstance = useRef<any>(null);
 
   // Request initial state from extension
@@ -233,6 +238,85 @@ export function App() {
     saveState();
   };
 
+  const handleHandoffDelete = useCallback((edge: Edge) => {
+    setEdgeToDelete(edge);
+    setShowConfirmDelete(true);
+    setShowHandoffModal(false);
+    setSelectedEdge(null);
+    setContextMenu(null);
+  }, []);
+
+  const confirmDeleteEdge = useCallback(() => {
+    if (!edgeToDelete) return;
+
+    console.log(`[Webview] [${Date.now()}] Deleting edge: ${edgeToDelete.id}`);
+    
+    setEdges((eds) => {
+      const newEdges = eds.filter((e) => e.id !== edgeToDelete.id);
+      
+      // Save immediately after state update using the new edges
+      setTimeout(() => {
+        if (!state) return;
+        
+        console.log(`[Webview] [${Date.now()}] Saving after edge deletion - ${newEdges.length} edges remaining`);
+        
+        const agents = nodes.map((node) => {
+          const nodeEdges = newEdges.filter((e) => e.source === node.id);
+          const handoffs = nodeEdges.map((edge) => edge.data?.handoff).filter(Boolean);
+
+          return {
+            id: node.id,
+            name: node.data.name,
+            description: node.data.description,
+            tools: node.data.tools,
+            model: node.data.model,
+            position: node.position,
+            handoffs: handoffs,
+            isEntryPoint: node.data.isEntryPoint
+          };
+        });
+
+        const updatedState = {
+          ...state,
+          agents
+        };
+
+        const totalHandoffs = agents.reduce((sum, a) => sum + a.handoffs.length, 0);
+        console.log(`[Webview] Post-delete save: ${agents.length} agents, ${totalHandoffs} total handoffs`);
+        
+        vscode.postMessage({
+          type: 'stateUpdate',
+          state: updatedState
+        });
+      }, 0);
+      
+      return newEdges;
+    });
+    
+    // Send notification to extension
+    vscode.postMessage({
+      type: 'showMessage',
+      message: 'Handoff connection deleted'
+    });
+
+    setShowConfirmDelete(false);
+    setEdgeToDelete(null);
+  }, [edgeToDelete, setEdges, nodes, state]);
+
+  const cancelDeleteEdge = useCallback(() => {
+    setShowConfirmDelete(false);
+    setEdgeToDelete(null);
+  }, []);
+
+  const onEdgeContextMenu = useCallback((event: React.MouseEvent, edge: Edge) => {
+    event.preventDefault();
+    setContextMenu({
+      x: event.clientX,
+      y: event.clientY,
+      edge
+    });
+  }, []);
+
   const addNewAgent = () => {
     const newAgent = {
       id: `agent-${Date.now()}`,
@@ -345,9 +429,12 @@ export function App() {
       return;
     }
 
+    console.log(`[Webview] [${Date.now()}] saveState called with ${edges.length} edges:`, edges.map(e => ({ id: e.id, source: e.source, target: e.target })));
+
     // Convert nodes and edges back to agents
     const agents = nodes.map((node) => {
       const nodeEdges = edges.filter((e) => e.source === node.id);
+      console.log(`[Webview] [${Date.now()}] Node ${node.data.name} has ${nodeEdges.length} outgoing edges`);
       const handoffs = nodeEdges.map((edge) => edge.data?.handoff).filter(Boolean);
 
       return {
@@ -375,6 +462,27 @@ export function App() {
       state: updatedState
     });
   }, [nodes, edges, state]);
+
+  // Auto-save state when nodes or edges change (after initial load)
+  useEffect(() => {
+    console.log(`[Webview] [${Date.now()}] useEffect fired - isLoading: ${isLoading}, state: ${!!state}, nodes: ${nodes.length}, edges: ${edges.length}`);
+    
+    if (!isLoading && state && (nodes.length > 0 || edges.length > 0)) {
+      console.log(`[Webview] [${Date.now()}] Scheduling auto-save with 100ms delay`);
+      console.log(`[Webview] [${Date.now()}] Current edges:`, edges.map(e => ({ id: e.id, source: e.source, target: e.target })));
+      
+      const timeoutId = setTimeout(() => {
+        console.log(`[Webview] [${Date.now()}] Auto-save timeout fired, calling saveState`);
+        saveState();
+      }, 100);
+      
+      return () => {
+        console.log(`[Webview] [${Date.now()}] Cleanup: clearing auto-save timeout`);
+        clearTimeout(timeoutId);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes, edges, isLoading, state]);
 
   const handleExport = () => {
     setShowValidation(true);
@@ -493,10 +601,20 @@ export function App() {
         }}
         onEdgesChange={(changes) => {
           onEdgesChange(changes);
+          // Check if any edges were removed (keyboard delete)
+          const hasRemoval = changes.some(change => change.type === 'remove');
+          if (hasRemoval) {
+            console.log(`[Webview] [${Date.now()}] Edge removed via keyboard`);
+            vscode.postMessage({
+              type: 'showMessage',
+              message: 'Handoff connection deleted'
+            });
+          }
           saveState();
         }}
         onConnect={onConnect}
         onEdgeClick={onEdgeClick}
+        onEdgeContextMenu={onEdgeContextMenu}
         onInit={(instance) => {
           reactFlowInstance.current = instance;
         }}
@@ -582,10 +700,31 @@ export function App() {
           handoff={selectedEdge.data?.handoff}
           targetAgentName={nodes.find(n => n.id === selectedEdge.target)?.data?.name as string}
           onSave={handleHandoffUpdate}
+          onDelete={() => handleHandoffDelete(selectedEdge)}
           onClose={() => {
             setShowHandoffModal(false);
             setSelectedEdge(null);
           }}
+        />
+      )}
+
+      {contextMenu && (
+        <EdgeContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onDelete={() => handleHandoffDelete(contextMenu.edge)}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
+
+      {showConfirmDelete && (
+        <ConfirmDialog
+          title="Delete Connection"
+          message="Delete this handoff connection?"
+          confirmLabel="Delete"
+          cancelLabel="Cancel"
+          onConfirm={confirmDeleteEdge}
+          onCancel={cancelDeleteEdge}
         />
       )}
 

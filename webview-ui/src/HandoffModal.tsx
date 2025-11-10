@@ -10,10 +10,11 @@ interface HandoffModalProps {
   };
   targetAgentName?: string;
   onSave: (handoff: any) => void;
+  onDelete: () => void;
   onClose: () => void;
 }
 
-export function HandoffModal({ handoff, targetAgentName, onSave, onClose }: HandoffModalProps) {
+export function HandoffModal({ handoff, targetAgentName, onSave, onDelete, onClose }: HandoffModalProps) {
   const [label, setLabel] = useState(handoff.label);
   const [prompt, setPrompt] = useState(handoff.prompt);
   const [send, setSend] = useState(handoff.send);
@@ -87,12 +88,17 @@ export function HandoffModal({ handoff, targetAgentName, onSave, onClose }: Hand
         </div>
         
         <div className="modal-footer">
-          <button onClick={onClose} className="secondary-button">
-            Cancel
+          <button onClick={onDelete} className="destructive-button delete-connection-button">
+            Delete Connection
           </button>
-          <button onClick={handleSave} className="primary-button">
-            Save Handoff
-          </button>
+          <div className="modal-footer-right">
+            <button onClick={onClose} className="secondary-button">
+              Cancel
+            </button>
+            <button onClick={handleSave} className="primary-button">
+              Save Handoff
+            </button>
+          </div>
         </div>
       </div>
     </div>

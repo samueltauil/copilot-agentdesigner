@@ -1330,7 +1330,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React9 = require_react(), Internals = {
+        var React11 = require_react(), Internals = {
           d: {
             f: noop2,
             r: function() {
@@ -1348,7 +1348,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = Symbol.for("react.portal"), ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = Symbol.for("react.portal"), ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2883,7 +2883,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React9.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React11.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18515,14 +18515,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React9 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React11 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy");
         Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = Symbol.for("react.activity");
         Symbol.for("react.legacy_hidden");
         Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = Symbol.for("react.memo_cache_sentinel");
         Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21310,7 +21310,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React9.version;
+          var isomorphicReactPackageVersion = React11.version;
           if ("19.2.0" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.0\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21664,18 +21664,18 @@
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React9 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React11 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React9 = {
+        React11 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React9.react_stack_bottom_frame.bind(
-          React9,
+        var unknownOwnerDebugStack = React11.react_stack_bottom_frame.bind(
+          React11,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -21728,7 +21728,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React9.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React11.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -21750,7 +21750,7 @@
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect5(
+          useEffect7(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -21776,8 +21776,8 @@
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React9 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState7 = React9.useState, useEffect5 = React9.useEffect, useLayoutEffect2 = React9.useLayoutEffect, useDebugValue2 = React9.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React9.useSyncExternalStore ? React9.useSyncExternalStore : shim;
+        var React11 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState7 = React11.useState, useEffect7 = React11.useEffect, useLayoutEffect2 = React11.useLayoutEffect, useDebugValue2 = React11.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React11.useSyncExternalStore ? React11.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -21804,9 +21804,9 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React9 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef3 = React9.useRef, useEffect5 = React9.useEffect, useMemo2 = React9.useMemo, useDebugValue2 = React9.useDebugValue;
+        var React11 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef4 = React11.useRef, useEffect7 = React11.useEffect, useMemo2 = React11.useMemo, useDebugValue2 = React11.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef3(null);
+          var instRef = useRef4(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -21847,7 +21847,7 @@
             [getSnapshot, getServerSnapshot, selector, isEqual]
           );
           var value = useSyncExternalStore(subscribe, instRef[0], instRef[1]);
-          useEffect5(
+          useEffect7(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -21875,11 +21875,11 @@
   });
 
   // webview-ui/src/index.tsx
-  var import_react12 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // webview-ui/src/App.tsx
-  var import_react9 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
 
   // node_modules/@xyflow/react/dist/esm/index.js
   var import_jsx_runtime = __toESM(require_jsx_runtime());
@@ -30717,7 +30717,7 @@
 
   // webview-ui/src/HandoffModal.tsx
   var import_react5 = __toESM(require_react());
-  function HandoffModal({ handoff, targetAgentName, onSave, onClose }) {
+  function HandoffModal({ handoff, targetAgentName, onSave, onDelete, onClose }) {
     const [label, setLabel] = (0, import_react5.useState)(handoff.label);
     const [prompt, setPrompt] = (0, import_react5.useState)(handoff.prompt);
     const [send, setSend] = (0, import_react5.useState)(handoff.send);
@@ -30754,7 +30754,7 @@
         checked: send,
         onChange: (e) => setSend(e.target.checked)
       }
-    ), /* @__PURE__ */ import_react5.default.createElement("span", { className: "checkbox-text" }, /* @__PURE__ */ import_react5.default.createElement("strong", null, "Auto-send"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "field-description" }, "Automatically submit the prompt (send: true)"))))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "modal-footer" }, /* @__PURE__ */ import_react5.default.createElement("button", { onClick: onClose, className: "secondary-button" }, "Cancel"), /* @__PURE__ */ import_react5.default.createElement("button", { onClick: handleSave, className: "primary-button" }, "Save Handoff"))));
+    ), /* @__PURE__ */ import_react5.default.createElement("span", { className: "checkbox-text" }, /* @__PURE__ */ import_react5.default.createElement("strong", null, "Auto-send"), /* @__PURE__ */ import_react5.default.createElement("span", { className: "field-description" }, "Automatically submit the prompt (send: true)"))))), /* @__PURE__ */ import_react5.default.createElement("div", { className: "modal-footer" }, /* @__PURE__ */ import_react5.default.createElement("button", { onClick: onDelete, className: "destructive-button delete-connection-button" }, "Delete Connection"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "modal-footer-right" }, /* @__PURE__ */ import_react5.default.createElement("button", { onClick: onClose, className: "secondary-button" }, "Cancel"), /* @__PURE__ */ import_react5.default.createElement("button", { onClick: handleSave, className: "primary-button" }, "Save Handoff")))));
   }
 
   // webview-ui/src/AgentEditModal.tsx
@@ -31015,7 +31015,99 @@
         }
       );
     };
-    return /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal-overlay", onClick: onClose }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal settings-panel", onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ import_react8.default.createElement("h2", null, "Settings"), /* @__PURE__ */ import_react8.default.createElement("h3", null, "Export Preferences"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "File Format:"), /* @__PURE__ */ import_react8.default.createElement("select", { value: fileFormat, onChange: (e) => setFileFormat(e.target.value) }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "chat.md" }, ".chat.md (default)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "chatmode.md" }, ".chatmode.md"))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Export Path:"), /* @__PURE__ */ import_react8.default.createElement("select", { value: exportPath, onChange: (e) => setExportPath(e.target.value) }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "agents" }, ".github/agents (default)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "chatmodes" }, ".github/chatmodes"))), /* @__PURE__ */ import_react8.default.createElement("h3", null, "Theme Customization"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Node Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: nodeColor, onChange: (e) => setNodeColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Entry Node Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: nodeEntryColor, onChange: (e) => setNodeEntryColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Edge Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: edgeColor, onChange: (e) => setEdgeColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Active Edge Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: edgeActiveColor, onChange: (e) => setEdgeActiveColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Canvas Background:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: canvasBackground, onChange: (e) => setCanvasBackground(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal-actions" }, /* @__PURE__ */ import_react8.default.createElement("button", { onClick: handleSave, className: "primary" }, "Save"), /* @__PURE__ */ import_react8.default.createElement("button", { onClick: onClose }, "Cancel"))));
+    return /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal-overlay", onClick: onClose }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal settings-panel", onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ import_react8.default.createElement("h2", null, "Settings"), /* @__PURE__ */ import_react8.default.createElement("h3", null, "Export Preferences"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "File Format:"), /* @__PURE__ */ import_react8.default.createElement("select", { value: fileFormat, onChange: (e) => setFileFormat(e.target.value) }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "agent.md" }, ".agent.md (recommended)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "chatmode.md" }, ".chatmode.md (for chat modes)"))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Export Path:"), /* @__PURE__ */ import_react8.default.createElement("select", { value: exportPath, onChange: (e) => setExportPath(e.target.value) }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "agents" }, ".github/agents (default)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "chatmodes" }, ".github/chatmodes"))), /* @__PURE__ */ import_react8.default.createElement("h3", null, "Theme Customization"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Node Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: nodeColor, onChange: (e) => setNodeColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Entry Node Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: nodeEntryColor, onChange: (e) => setNodeEntryColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Edge Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: edgeColor, onChange: (e) => setEdgeColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Active Edge Color:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: edgeActiveColor, onChange: (e) => setEdgeActiveColor(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react8.default.createElement("label", null, "Canvas Background:"), /* @__PURE__ */ import_react8.default.createElement("input", { type: "color", value: canvasBackground, onChange: (e) => setCanvasBackground(e.target.value) })), /* @__PURE__ */ import_react8.default.createElement("div", { className: "modal-actions" }, /* @__PURE__ */ import_react8.default.createElement("button", { onClick: handleSave, className: "primary" }, "Save"), /* @__PURE__ */ import_react8.default.createElement("button", { onClick: onClose }, "Cancel"))));
+  }
+
+  // webview-ui/src/ConfirmDialog.tsx
+  var import_react9 = __toESM(require_react());
+  function ConfirmDialog({
+    title,
+    message,
+    confirmLabel = "Delete",
+    cancelLabel = "Cancel",
+    onConfirm,
+    onCancel
+  }) {
+    (0, import_react9.useEffect)(() => {
+      const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          onConfirm();
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          onCancel();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [onConfirm, onCancel]);
+    return /* @__PURE__ */ import_react9.default.createElement("div", { className: "modal-overlay confirm-dialog-overlay", onClick: onCancel }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "modal-content confirm-dialog", onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "confirm-dialog-header" }, /* @__PURE__ */ import_react9.default.createElement("h3", null, title)), /* @__PURE__ */ import_react9.default.createElement("div", { className: "confirm-dialog-body" }, /* @__PURE__ */ import_react9.default.createElement("p", null, message)), /* @__PURE__ */ import_react9.default.createElement("div", { className: "confirm-dialog-footer" }, /* @__PURE__ */ import_react9.default.createElement("button", { onClick: onCancel, className: "secondary-button" }, cancelLabel), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: onConfirm, className: "destructive-button" }, confirmLabel))));
+  }
+
+  // webview-ui/src/EdgeContextMenu.tsx
+  var import_react10 = __toESM(require_react());
+  function EdgeContextMenu({ x, y, onDelete, onClose }) {
+    const menuRef = (0, import_react10.useRef)(null);
+    (0, import_react10.useEffect)(() => {
+      const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+          onClose();
+        }
+      };
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          onClose();
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          onDelete();
+        }
+      };
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("keydown", handleKeyDown);
+      }, 0);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [onClose, onDelete]);
+    (0, import_react10.useEffect)(() => {
+      if (menuRef.current) {
+        const rect = menuRef.current.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        let adjustedX = x;
+        let adjustedY = y;
+        if (x + rect.width > viewportWidth) {
+          adjustedX = viewportWidth - rect.width - 10;
+        }
+        if (y + rect.height > viewportHeight) {
+          adjustedY = viewportHeight - rect.height - 10;
+        }
+        menuRef.current.style.left = `${adjustedX}px`;
+        menuRef.current.style.top = `${adjustedY}px`;
+      }
+    }, [x, y]);
+    return /* @__PURE__ */ import_react10.default.createElement(
+      "div",
+      {
+        ref: menuRef,
+        className: "edge-context-menu",
+        style: { left: x, top: y },
+        onClick: (e) => e.stopPropagation()
+      },
+      /* @__PURE__ */ import_react10.default.createElement(
+        "button",
+        {
+          className: "context-menu-item destructive",
+          onClick: onDelete
+        },
+        /* @__PURE__ */ import_react10.default.createElement("span", { className: "context-menu-icon" }, "\u{1F5D1}\uFE0F"),
+        /* @__PURE__ */ import_react10.default.createElement("span", { className: "context-menu-label" }, "Delete Connection"),
+        /* @__PURE__ */ import_react10.default.createElement("span", { className: "context-menu-shortcut" }, "Del")
+      )
+    );
   }
 
   // webview-ui/src/layout.ts
@@ -31053,19 +31145,22 @@
   function App() {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const [selectedEdge, setSelectedEdge] = (0, import_react9.useState)(null);
-    const [selectedAgentId, setSelectedAgentId] = (0, import_react9.useState)(null);
-    const [showHandoffModal, setShowHandoffModal] = (0, import_react9.useState)(false);
-    const [showAgentEditModal, setShowAgentEditModal] = (0, import_react9.useState)(false);
-    const [showValidation, setShowValidation] = (0, import_react9.useState)(false);
-    const [showSettings, setShowSettings] = (0, import_react9.useState)(false);
-    const [validationIssues, setValidationIssues] = (0, import_react9.useState)([]);
-    const [state, setState] = (0, import_react9.useState)(null);
-    const [showImportBanner, setShowImportBanner] = (0, import_react9.useState)(false);
-    const [importBannerMessage, setImportBannerMessage] = (0, import_react9.useState)("");
-    const [isLoading, setIsLoading] = (0, import_react9.useState)(true);
-    const reactFlowInstance = (0, import_react9.useRef)(null);
-    (0, import_react9.useEffect)(() => {
+    const [selectedEdge, setSelectedEdge] = (0, import_react11.useState)(null);
+    const [selectedAgentId, setSelectedAgentId] = (0, import_react11.useState)(null);
+    const [showHandoffModal, setShowHandoffModal] = (0, import_react11.useState)(false);
+    const [showAgentEditModal, setShowAgentEditModal] = (0, import_react11.useState)(false);
+    const [showValidation, setShowValidation] = (0, import_react11.useState)(false);
+    const [showSettings, setShowSettings] = (0, import_react11.useState)(false);
+    const [validationIssues, setValidationIssues] = (0, import_react11.useState)([]);
+    const [state, setState] = (0, import_react11.useState)(null);
+    const [showImportBanner, setShowImportBanner] = (0, import_react11.useState)(false);
+    const [importBannerMessage, setImportBannerMessage] = (0, import_react11.useState)("");
+    const [isLoading, setIsLoading] = (0, import_react11.useState)(true);
+    const [showConfirmDelete, setShowConfirmDelete] = (0, import_react11.useState)(false);
+    const [edgeToDelete, setEdgeToDelete] = (0, import_react11.useState)(null);
+    const [contextMenu, setContextMenu] = (0, import_react11.useState)(null);
+    const reactFlowInstance = (0, import_react11.useRef)(null);
+    (0, import_react11.useEffect)(() => {
       console.log(`[Webview] [${Date.now()}] React App mounted, registering message listener`);
       console.log(`[Webview] [${Date.now()}] Window size: ${window.innerWidth}x${window.innerHeight}`);
       console.log(`[Webview] [${Date.now()}] Document ready state: ${document.readyState}`);
@@ -31170,7 +31265,7 @@
       setEdges(newEdges);
       console.log(`[Webview] [${Date.now()}] Canvas state loaded successfully`);
     };
-    const onConnect = (0, import_react9.useCallback)(
+    const onConnect = (0, import_react11.useCallback)(
       (params) => {
         vscode.postMessage({
           type: "validateConnection",
@@ -31196,7 +31291,7 @@
       },
       [edges]
     );
-    const onEdgeClick = (0, import_react9.useCallback)((event, edge) => {
+    const onEdgeClick = (0, import_react11.useCallback)((event, edge) => {
       setSelectedEdge(edge);
       setShowHandoffModal(true);
     }, []);
@@ -31217,6 +31312,67 @@
       setSelectedEdge(null);
       saveState();
     };
+    const handleHandoffDelete = (0, import_react11.useCallback)((edge) => {
+      setEdgeToDelete(edge);
+      setShowConfirmDelete(true);
+      setShowHandoffModal(false);
+      setSelectedEdge(null);
+      setContextMenu(null);
+    }, []);
+    const confirmDeleteEdge = (0, import_react11.useCallback)(() => {
+      if (!edgeToDelete) return;
+      console.log(`[Webview] [${Date.now()}] Deleting edge: ${edgeToDelete.id}`);
+      setEdges((eds) => {
+        const newEdges = eds.filter((e) => e.id !== edgeToDelete.id);
+        setTimeout(() => {
+          if (!state) return;
+          console.log(`[Webview] [${Date.now()}] Saving after edge deletion - ${newEdges.length} edges remaining`);
+          const agents = nodes.map((node) => {
+            const nodeEdges = newEdges.filter((e) => e.source === node.id);
+            const handoffs = nodeEdges.map((edge) => edge.data?.handoff).filter(Boolean);
+            return {
+              id: node.id,
+              name: node.data.name,
+              description: node.data.description,
+              tools: node.data.tools,
+              model: node.data.model,
+              position: node.position,
+              handoffs,
+              isEntryPoint: node.data.isEntryPoint
+            };
+          });
+          const updatedState = {
+            ...state,
+            agents
+          };
+          const totalHandoffs = agents.reduce((sum, a) => sum + a.handoffs.length, 0);
+          console.log(`[Webview] Post-delete save: ${agents.length} agents, ${totalHandoffs} total handoffs`);
+          vscode.postMessage({
+            type: "stateUpdate",
+            state: updatedState
+          });
+        }, 0);
+        return newEdges;
+      });
+      vscode.postMessage({
+        type: "showMessage",
+        message: "Handoff connection deleted"
+      });
+      setShowConfirmDelete(false);
+      setEdgeToDelete(null);
+    }, [edgeToDelete, setEdges, nodes, state]);
+    const cancelDeleteEdge = (0, import_react11.useCallback)(() => {
+      setShowConfirmDelete(false);
+      setEdgeToDelete(null);
+    }, []);
+    const onEdgeContextMenu = (0, import_react11.useCallback)((event, edge) => {
+      event.preventDefault();
+      setContextMenu({
+        x: event.clientX,
+        y: event.clientY,
+        edge
+      });
+    }, []);
     const addNewAgent = () => {
       const newAgent = {
         id: `agent-${Date.now()}`,
@@ -31304,13 +31460,15 @@
         saveState();
       }, 50);
     };
-    const saveState = (0, import_react9.useCallback)(() => {
+    const saveState = (0, import_react11.useCallback)(() => {
       if (!state) {
         console.log("[Webview] Cannot save state: state is null");
         return;
       }
+      console.log(`[Webview] [${Date.now()}] saveState called with ${edges.length} edges:`, edges.map((e) => ({ id: e.id, source: e.source, target: e.target })));
       const agents = nodes.map((node) => {
         const nodeEdges = edges.filter((e) => e.source === node.id);
+        console.log(`[Webview] [${Date.now()}] Node ${node.data.name} has ${nodeEdges.length} outgoing edges`);
         const handoffs = nodeEdges.map((edge) => edge.data?.handoff).filter(Boolean);
         return {
           id: node.id,
@@ -31335,6 +31493,21 @@
         state: updatedState
       });
     }, [nodes, edges, state]);
+    (0, import_react11.useEffect)(() => {
+      console.log(`[Webview] [${Date.now()}] useEffect fired - isLoading: ${isLoading}, state: ${!!state}, nodes: ${nodes.length}, edges: ${edges.length}`);
+      if (!isLoading && state && (nodes.length > 0 || edges.length > 0)) {
+        console.log(`[Webview] [${Date.now()}] Scheduling auto-save with 100ms delay`);
+        console.log(`[Webview] [${Date.now()}] Current edges:`, edges.map((e) => ({ id: e.id, source: e.source, target: e.target })));
+        const timeoutId = setTimeout(() => {
+          console.log(`[Webview] [${Date.now()}] Auto-save timeout fired, calling saveState`);
+          saveState();
+        }, 100);
+        return () => {
+          console.log(`[Webview] [${Date.now()}] Cleanup: clearing auto-save timeout`);
+          clearTimeout(timeoutId);
+        };
+      }
+    }, [nodes, edges, isLoading, state]);
     const handleExport = () => {
       setShowValidation(true);
     };
@@ -31347,23 +31520,23 @@
     const handleAddFromFile = () => {
       vscode.postMessage({ type: "addFromFile" });
     };
-    const [isDragOver, setIsDragOver] = (0, import_react9.useState)(false);
-    const handleDragOver = (0, import_react9.useCallback)((event) => {
+    const [isDragOver, setIsDragOver] = (0, import_react11.useState)(false);
+    const handleDragOver = (0, import_react11.useCallback)((event) => {
       event.preventDefault();
       event.stopPropagation();
       event.dataTransfer.dropEffect = "copy";
     }, []);
-    const handleDragEnter = (0, import_react9.useCallback)((event) => {
+    const handleDragEnter = (0, import_react11.useCallback)((event) => {
       event.preventDefault();
       setIsDragOver(true);
     }, []);
-    const handleDragLeave = (0, import_react9.useCallback)((event) => {
+    const handleDragLeave = (0, import_react11.useCallback)((event) => {
       event.preventDefault();
       if (event.currentTarget === event.target) {
         setIsDragOver(false);
       }
     }, []);
-    const handleDrop = (0, import_react9.useCallback)((event) => {
+    const handleDrop = (0, import_react11.useCallback)((event) => {
       event.preventDefault();
       event.stopPropagation();
       setIsDragOver(false);
@@ -31397,7 +31570,7 @@
         });
       }
     }, []);
-    return /* @__PURE__ */ import_react9.default.createElement(
+    return /* @__PURE__ */ import_react11.default.createElement(
       "div",
       {
         className: `app ${isDragOver ? "drag-over" : ""}`,
@@ -31406,7 +31579,7 @@
         onDragLeave: handleDragLeave,
         onDrop: handleDrop
       },
-      isLoading && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+      isLoading && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
         position: "absolute",
         top: 0,
         left: 0,
@@ -31420,7 +31593,7 @@
         color: "var(--vscode-foreground)",
         fontSize: "14px"
       } }, "Loading Agent Designer..."),
-      /* @__PURE__ */ import_react9.default.createElement(
+      /* @__PURE__ */ import_react11.default.createElement(
         index,
         {
           nodes,
@@ -31431,10 +31604,19 @@
           },
           onEdgesChange: (changes) => {
             onEdgesChange(changes);
+            const hasRemoval = changes.some((change) => change.type === "remove");
+            if (hasRemoval) {
+              console.log(`[Webview] [${Date.now()}] Edge removed via keyboard`);
+              vscode.postMessage({
+                type: "showMessage",
+                message: "Handoff connection deleted"
+              });
+            }
             saveState();
           },
           onConnect,
           onEdgeClick,
+          onEdgeContextMenu,
           onInit: (instance) => {
             reactFlowInstance.current = instance;
           },
@@ -31449,11 +31631,11 @@
           defaultViewport: { x: 0, y: 0, zoom: 1 },
           preventScrolling: false
         },
-        /* @__PURE__ */ import_react9.default.createElement(Background, { variant: BackgroundVariant.Dots }),
-        /* @__PURE__ */ import_react9.default.createElement(Controls, null),
-        /* @__PURE__ */ import_react9.default.createElement(Panel, { position: "top-left" }, /* @__PURE__ */ import_react9.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react9.default.createElement("button", { onClick: addNewAgent }, "Add Agent"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleAddFromFile }, "Add from File"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: applyAutoLayout }, "Auto Layout"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleExport }, "Export"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleImport }, "Import Files"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: handleImportDirectory }, "Load from Directory"), /* @__PURE__ */ import_react9.default.createElement("button", { onClick: () => setShowSettings(true) }, "Settings")))
+        /* @__PURE__ */ import_react11.default.createElement(Background, { variant: BackgroundVariant.Dots }),
+        /* @__PURE__ */ import_react11.default.createElement(Controls, null),
+        /* @__PURE__ */ import_react11.default.createElement(Panel, { position: "top-left" }, /* @__PURE__ */ import_react11.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react11.default.createElement("button", { onClick: addNewAgent }, "Add Agent"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: handleAddFromFile }, "Add from File"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: applyAutoLayout }, "Auto Layout"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: handleExport }, "Export"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: handleImport }, "Import Files"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: handleImportDirectory }, "Load from Directory"), /* @__PURE__ */ import_react11.default.createElement("button", { onClick: () => setShowSettings(true) }, "Settings")))
       ),
-      showImportBanner && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+      showImportBanner && /* @__PURE__ */ import_react11.default.createElement("div", { style: {
         position: "fixed",
         top: "10px",
         left: "50%",
@@ -31467,7 +31649,7 @@
         alignItems: "center",
         gap: "12px",
         zIndex: 1e3
-      } }, /* @__PURE__ */ import_react9.default.createElement("span", null, importBannerMessage), /* @__PURE__ */ import_react9.default.createElement(
+      } }, /* @__PURE__ */ import_react11.default.createElement("span", null, importBannerMessage), /* @__PURE__ */ import_react11.default.createElement(
         "button",
         {
           onClick: () => {
@@ -31485,7 +31667,7 @@
           }
         },
         "Load Now"
-      ), /* @__PURE__ */ import_react9.default.createElement(
+      ), /* @__PURE__ */ import_react11.default.createElement(
         "button",
         {
           onClick: () => setShowImportBanner(false),
@@ -31500,19 +31682,40 @@
         },
         "Dismiss"
       )),
-      showHandoffModal && selectedEdge && /* @__PURE__ */ import_react9.default.createElement(
+      showHandoffModal && selectedEdge && /* @__PURE__ */ import_react11.default.createElement(
         HandoffModal,
         {
           handoff: selectedEdge.data?.handoff,
           targetAgentName: nodes.find((n) => n.id === selectedEdge.target)?.data?.name,
           onSave: handleHandoffUpdate,
+          onDelete: () => handleHandoffDelete(selectedEdge),
           onClose: () => {
             setShowHandoffModal(false);
             setSelectedEdge(null);
           }
         }
       ),
-      showAgentEditModal && selectedAgentId && /* @__PURE__ */ import_react9.default.createElement(
+      contextMenu && /* @__PURE__ */ import_react11.default.createElement(
+        EdgeContextMenu,
+        {
+          x: contextMenu.x,
+          y: contextMenu.y,
+          onDelete: () => handleHandoffDelete(contextMenu.edge),
+          onClose: () => setContextMenu(null)
+        }
+      ),
+      showConfirmDelete && /* @__PURE__ */ import_react11.default.createElement(
+        ConfirmDialog,
+        {
+          title: "Delete Connection",
+          message: "Delete this handoff connection?",
+          confirmLabel: "Delete",
+          cancelLabel: "Cancel",
+          onConfirm: confirmDeleteEdge,
+          onCancel: cancelDeleteEdge
+        }
+      ),
+      showAgentEditModal && selectedAgentId && /* @__PURE__ */ import_react11.default.createElement(
         AgentEditModal,
         {
           agent: nodes.find((n) => n.id === selectedAgentId) ? {
@@ -31537,7 +31740,7 @@
           onSave: handleAgentUpdate
         }
       ),
-      showValidation && /* @__PURE__ */ import_react9.default.createElement(
+      showValidation && /* @__PURE__ */ import_react11.default.createElement(
         ValidationPanel,
         {
           agents: nodes.map((node) => ({
@@ -31569,7 +31772,7 @@
           }
         }
       ),
-      showSettings && state && /* @__PURE__ */ import_react9.default.createElement(
+      showSettings && state && /* @__PURE__ */ import_react11.default.createElement(
         SettingsPanel,
         {
           preferences: state.preferences,
@@ -31594,8 +31797,8 @@
   }
 
   // webview-ui/src/ErrorBoundary.tsx
-  var import_react11 = __toESM(require_react());
-  var ErrorBoundary = class extends import_react11.default.Component {
+  var import_react13 = __toESM(require_react());
+  var ErrorBoundary = class extends import_react13.default.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -31634,7 +31837,7 @@
     }
     render() {
       if (this.state.hasError) {
-        return /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+        return /* @__PURE__ */ import_react13.default.createElement("div", { style: {
           padding: "20px",
           color: "var(--vscode-errorForeground)",
           backgroundColor: "var(--vscode-editor-background)",
@@ -31644,7 +31847,7 @@
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "var(--vscode-font-family)"
-        } }, /* @__PURE__ */ import_react11.default.createElement("h2", { style: { marginBottom: "20px" } }, "\u26A0\uFE0F Agent Designer Error"), /* @__PURE__ */ import_react11.default.createElement("p", { style: { marginBottom: "10px", maxWidth: "600px", textAlign: "center" } }, "An error occurred while rendering the canvas. This has been logged for debugging."), /* @__PURE__ */ import_react11.default.createElement("details", { style: {
+        } }, /* @__PURE__ */ import_react13.default.createElement("h2", { style: { marginBottom: "20px" } }, "\u26A0\uFE0F Agent Designer Error"), /* @__PURE__ */ import_react13.default.createElement("p", { style: { marginBottom: "10px", maxWidth: "600px", textAlign: "center" } }, "An error occurred while rendering the canvas. This has been logged for debugging."), /* @__PURE__ */ import_react13.default.createElement("details", { style: {
           marginTop: "20px",
           padding: "10px",
           backgroundColor: "var(--vscode-editor-background)",
@@ -31652,12 +31855,12 @@
           borderRadius: "4px",
           maxWidth: "800px",
           width: "100%"
-        } }, /* @__PURE__ */ import_react11.default.createElement("summary", { style: { cursor: "pointer", fontWeight: "bold", marginBottom: "10px" } }, "Error Details"), /* @__PURE__ */ import_react11.default.createElement("pre", { style: {
+        } }, /* @__PURE__ */ import_react13.default.createElement("summary", { style: { cursor: "pointer", fontWeight: "bold", marginBottom: "10px" } }, "Error Details"), /* @__PURE__ */ import_react13.default.createElement("pre", { style: {
           whiteSpace: "pre-wrap",
           fontSize: "12px",
           overflow: "auto",
           maxHeight: "400px"
-        } }, this.state.error?.toString(), "\n\n", this.state.error?.stack, "\n\nComponent Stack:", this.state.errorInfo?.componentStack)), /* @__PURE__ */ import_react11.default.createElement(
+        } }, this.state.error?.toString(), "\n\n", this.state.error?.stack, "\n\nComponent Stack:", this.state.errorInfo?.componentStack)), /* @__PURE__ */ import_react13.default.createElement(
           "button",
           {
             onClick: () => {
@@ -31693,7 +31896,7 @@
   if (container) {
     const root2 = (0, import_client.createRoot)(container);
     root2.render(
-      /* @__PURE__ */ import_react12.default.createElement(ErrorBoundary, null, /* @__PURE__ */ import_react12.default.createElement(App, null))
+      /* @__PURE__ */ import_react14.default.createElement(ErrorBoundary, null, /* @__PURE__ */ import_react14.default.createElement(App, null))
     );
   }
 })();

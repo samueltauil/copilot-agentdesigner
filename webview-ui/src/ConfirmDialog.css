@@ -1,0 +1,77 @@
+.confirm-dialog-overlay {
+  z-index: 10000;
+}
+
+.confirm-dialog {
+  max-width: 450px;
+  width: 90%;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.confirm-dialog-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.confirm-dialog-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.confirm-dialog-body {
+  padding: 20px;
+}
+
+.confirm-dialog-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--vscode-foreground);
+}
+
+.confirm-dialog-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--vscode-panel-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.confirm-dialog-footer button {
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--vscode-font-family);
+  transition: background-color 0.15s ease;
+}
+
+.confirm-dialog-footer .secondary-button {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.confirm-dialog-footer .secondary-button:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+.confirm-dialog-footer .destructive-button {
+  background: var(--vscode-inputValidation-errorBackground);
+  color: var(--vscode-inputValidation-errorForeground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+}
+
+.confirm-dialog-footer .destructive-button:hover {
+  background: var(--vscode-inputValidation-errorBorder);
+  opacity: 0.9;
+}
+
+.confirm-dialog-footer .destructive-button:active {
+  opacity: 0.8;
+}

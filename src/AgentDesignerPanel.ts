@@ -9,6 +9,7 @@ export class AgentDesignerPanel {
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
     private _autoSaveTimeout: NodeJS.Timeout | undefined;
+    private _agentFilesUpdateTimeout: NodeJS.Timeout | undefined;
     private _canvasState: CanvasState | undefined;
     private _stateFilePath: string = '';
     private _needsAutoImport: boolean = false;
@@ -385,6 +386,7 @@ export class AgentDesignerPanel {
         console.log(`[AgentDesigner] State update received: ${state.agents.length} agents`);
         this._canvasState = state;
         this._scheduleAutoSave();
+        this._scheduleAgentFilesUpdate();
     }
 
     private _scheduleAutoSave() {
@@ -395,6 +397,50 @@ export class AgentDesignerPanel {
         this._autoSaveTimeout = setTimeout(() => {
             this._saveState();
         }, 500);
+    }
+
+    private _scheduleAgentFilesUpdate() {
+        if (this._agentFilesUpdateTimeout) {
+            clearTimeout(this._agentFilesUpdateTimeout);
+        }
+
+        this._agentFilesUpdateTimeout = setTimeout(() => {
+            this._updateAgentFiles();
+        }, 500);
+    }
+
+    private async _updateAgentFiles() {
+        if (!this._canvasState) {
+            console.log('[AgentDesigner] No canvas state to update agent files');
+            return;
+        }
+
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) {
+            console.log('[AgentDesigner] No workspace folder for updating agent files');
+            return;
+        }
+
+        try {
+            const { AgentFileGenerator } = require('./generators/agentFileGenerator');
+            
+            console.log(`[AgentDesigner] Auto-updating ${this._canvasState.agents.length} agent files`);
+            
+            // Generate files (no user interaction needed)
+            const files = AgentFileGenerator.generateFiles(
+                this._canvasState.agents,
+                this._canvasState.preferences,
+                workspaceFolder.uri.fsPath
+            );
+
+            // Write all files without prompting
+            await AgentFileGenerator.writeFiles(files);
+            
+            console.log(`[AgentDesigner] Successfully updated ${files.length} agent file(s)`);
+        } catch (error) {
+            console.error('[AgentDesigner] Auto-update agent files error:', error);
+            // Don't show error message to user for auto-updates, just log it
+        }
     }
 
     private _saveState() {
@@ -758,10 +804,11 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
             }
 
             const filePath = files[0].fsPath;
+            const fileName = path.basename(filePath);
             
-            // Check if it's an agent file
-            if (!filePath.endsWith('.chat.md') && !filePath.endsWith('.chatmode.md')) {
-                vscode.window.showWarningMessage('Please select a .chat.md or .chatmode.md file');
+            // Check if it's an agent file (.agent.md or .chatmode.md)
+            if (!filePath.endsWith('.agent.md') && !filePath.endsWith('.chatmode.md')) {
+                vscode.window.showWarningMessage('Please select a .agent.md or .chatmode.md file');
                 return;
             }
 
@@ -769,7 +816,7 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
             const parsed = AgentFileParser.parse(content, filePath);
             
             if (!parsed) {
-                vscode.window.showErrorMessage('Failed to parse agent file');
+                vscode.window.showErrorMessage(`Failed to parse ${fileName}`);
                 return;
             }
 
@@ -802,9 +849,17 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
                 agent: agent
             });
 
-            vscode.window.showInformationMessage(`Added agent "${parsed.name}" to canvas`);
+            // Check if we used defaults (no description means likely missing frontmatter)
+            if (!parsed.description) {
+                vscode.window.showInformationMessage(
+                    `Added agent "${parsed.name}" to canvas (some fields missing, defaults applied)`
+                );
+            } else {
+                vscode.window.showInformationMessage(`Added agent "${parsed.name}" to canvas`);
+            }
 
         } catch (error) {
+            console.error('[AgentDesignerPanel] Add from file error:', error);
             vscode.window.showErrorMessage(`Failed to add agent: ${error}`);
         }
     }
@@ -819,9 +874,9 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
                 return;
             }
 
-            // Check if it's an agent file
-            if (!fileName.endsWith('.agent.md')) {
-                vscode.window.showWarningMessage('Only .agent.md files can be dropped');
+            // Check if it's an agent file (.agent.md or .chatmode.md)
+            if (!fileName.endsWith('.agent.md') && !fileName.endsWith('.chatmode.md')) {
+                vscode.window.showWarningMessage('Only .agent.md or .chatmode.md files can be dropped');
                 return;
             }
 
@@ -850,7 +905,7 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
             const parsed = AgentFileParser.parse(content, filePath);
             
             if (!parsed) {
-                vscode.window.showErrorMessage('Failed to parse agent file');
+                vscode.window.showErrorMessage(`Failed to parse ${fileName}`);
                 return;
             }
 
@@ -879,10 +934,17 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
                 agent: agent
             });
 
-            vscode.window.showInformationMessage(`Added agent "${parsed.name}" at drop location`);
+            // Check if we used defaults (no description means likely missing frontmatter)
+            if (!parsed.description) {
+                vscode.window.showInformationMessage(
+                    `Added agent "${parsed.name}" at drop location (some fields missing, defaults applied)`
+                );
+            } else {
+                vscode.window.showInformationMessage(`Added agent "${parsed.name}" at drop location`);
+            }
 
         } catch (error) {
-            console.error('Drop error:', error);
+            console.error('[AgentDesignerPanel] Drop error:', error);
             vscode.window.showErrorMessage(`Failed to add agent: ${error}`);
         }
     }

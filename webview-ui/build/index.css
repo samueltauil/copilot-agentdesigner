@@ -619,6 +619,36 @@ svg.react-flow__connectionline {
 .checkbox-text strong {
   font-size: 13px;
 }
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-footer-right {
+  display: flex;
+  gap: 8px;
+}
+.destructive-button {
+  background: var(--vscode-inputValidation-errorBackground);
+  color: var(--vscode-inputValidation-errorForeground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--vscode-font-family);
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+.destructive-button:hover {
+  background: var(--vscode-inputValidation-errorBorder);
+  opacity: 0.9;
+}
+.destructive-button:active {
+  opacity: 0.8;
+}
+.delete-connection-button {
+  margin-right: auto;
+}
 
 /* webview-ui/src/AgentEditModal.css */
 .agent-edit-modal {
@@ -687,6 +717,143 @@ svg.react-flow__connectionline {
   font-size: 11px;
   color: var(--vscode-descriptionForeground);
   font-style: italic;
+}
+
+/* webview-ui/src/ConfirmDialog.css */
+.confirm-dialog-overlay {
+  z-index: 10000;
+}
+.confirm-dialog {
+  max-width: 450px;
+  width: 90%;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.confirm-dialog-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+}
+.confirm-dialog-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+.confirm-dialog-body {
+  padding: 20px;
+}
+.confirm-dialog-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--vscode-foreground);
+}
+.confirm-dialog-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--vscode-panel-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.confirm-dialog-footer button {
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--vscode-font-family);
+  transition: background-color 0.15s ease;
+}
+.confirm-dialog-footer .secondary-button {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+.confirm-dialog-footer .secondary-button:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+.confirm-dialog-footer .destructive-button {
+  background: var(--vscode-inputValidation-errorBackground);
+  color: var(--vscode-inputValidation-errorForeground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+}
+.confirm-dialog-footer .destructive-button:hover {
+  background: var(--vscode-inputValidation-errorBorder);
+  opacity: 0.9;
+}
+.confirm-dialog-footer .destructive-button:active {
+  opacity: 0.8;
+}
+
+/* webview-ui/src/EdgeContextMenu.css */
+.edge-context-menu {
+  position: fixed;
+  z-index: 10001;
+  background: var(--vscode-menu-background);
+  border: 1px solid var(--vscode-menu-border);
+  border-radius: 5px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  min-width: 200px;
+  animation: contextMenuFadeIn 0.1s ease-out;
+}
+@keyframes contextMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  background: none;
+  border: none;
+  color: var(--vscode-menu-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.1s ease;
+}
+.context-menu-item:hover {
+  background: var(--vscode-menu-selectionBackground);
+  color: var(--vscode-menu-selectionForeground);
+}
+.context-menu-item:active {
+  background: var(--vscode-menu-selectionBackground);
+  opacity: 0.8;
+}
+.context-menu-item.destructive {
+  color: var(--vscode-errorForeground, #f48771);
+}
+.context-menu-item.destructive:hover {
+  background: var(--vscode-inputValidation-errorBackground);
+  color: var(--vscode-errorForeground, #f48771);
+}
+.context-menu-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.context-menu-label {
+  flex: 1;
+}
+.context-menu-shortcut {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: auto;
+  color: var(--vscode-descriptionForeground);
+}
+.context-menu-item:hover .context-menu-shortcut {
+  opacity: 0.9;
 }
 
 /* webview-ui/src/App.css */
