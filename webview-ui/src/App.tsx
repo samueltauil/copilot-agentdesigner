@@ -45,6 +45,8 @@ export function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [validationIssues, setValidationIssues] = useState<any[]>([]);
   const [state, setState] = useState<AppState | null>(null);
+  const [showImportBanner, setShowImportBanner] = useState(false);
+  const [importBannerMessage, setImportBannerMessage] = useState('');
   const reactFlowInstance = useRef<any>(null);
 
   // Request initial state from extension
@@ -87,6 +89,13 @@ export function App() {
             saveState();
           }
           break;
+        case 'agentCheckResult':
+          // Received agent discovery result from extension
+          if (message.agentCount > 0 && nodes.length === 0) {
+            setShowImportBanner(true);
+            setImportBannerMessage(`Found ${message.agentCount} agent file${message.agentCount > 1 ? 's' : ''} in ${message.sources.join(', ')}`);
+          }
+          break;
       }
     };
 
@@ -99,7 +108,9 @@ export function App() {
     setState(canvasState);
 
     if (!canvasState.agents || canvasState.agents.length === 0) {
-      console.log('[Webview] No agents to load');
+      console.log('[Webview] No agents to load, checking for existing agents');
+      // Check if agents exist but weren't loaded
+      vscode.postMessage({ type: 'checkForAgents' });
       return;
     }
 
@@ -479,6 +490,56 @@ export function App() {
           </div>
         </Panel>
       </ReactFlow>
+
+      {showImportBanner && (
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          backgroundColor: '#007acc',
+          color: 'white',
+          padding: '12px 20px',
+          borderRadius: '4px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          zIndex: 1000
+        }}>
+          <span>{importBannerMessage}</span>
+          <button
+            onClick={() => {
+              vscode.postMessage({ type: 'importExisting' });
+              setShowImportBanner(false);
+            }}
+            style={{
+              backgroundColor: 'white',
+              color: '#007acc',
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+          >
+            Load Now
+          </button>
+          <button
+            onClick={() => setShowImportBanner(false)}
+            style={{
+              backgroundColor: 'transparent',
+              color: 'white',
+              border: '1px solid white',
+              padding: '6px 12px',
+              borderRadius: '3px',
+              cursor: 'pointer'
+            }}
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {showHandoffModal && selectedEdge && (
         <HandoffModal
