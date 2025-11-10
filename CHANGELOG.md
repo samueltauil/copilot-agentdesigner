@@ -2,6 +2,31 @@
 
 All notable changes to the "copilot-agentdesigner" extension will be documented in this file.
 
+## [0.5.1] - 2025-11-10
+
+### Fixed
+- **Black Canvas Issue**: Fixed critical timing race condition that caused blank canvas on slower machines
+  - Implemented bidirectional handshake protocol: webview signals ready, extension waits before sending state
+  - Removed unreliable 100ms setTimeout that was insufficient for slower systems
+  - Extension now waits for explicit `webviewReady` signal from webview before sending initial state
+- **Extension Crash on No Workspace**: Fixed crash when opening extension with no workspace folder
+  - Constructor no longer calls dispose() prematurely when workspace folder is missing
+  - Initializes with empty state instead, allowing normal operation
+  - Message handlers are now properly set up before any disposal logic
+- **Silent React Errors**: Added Error Boundary component to catch rendering failures
+  - Displays user-friendly error screen with error details when React crashes
+  - Provides "Reload Canvas" button for quick recovery
+  - Sends error information to extension for diagnostics
+  - Prevents complete UI freeze on rendering errors
+- **Enhanced Diagnostic Logging**: Added timestamps to all console logs for timing analysis
+  - All logs now include `Date.now()` timestamps for debugging timing issues
+  - Enhanced logging in state loading, agent detection, and webview communication
+  - Null checks added to prevent silent failures in state transmission
+- **Loading Indicator**: Added visual feedback during initialization
+  - Shows "Loading Agent Designer..." overlay until initial state is received
+  - Prevents user confusion during webview initialization
+  - Automatically dismisses when canvas is ready
+
 ## [0.5.0] - 2025-11-10
 
 ### Added

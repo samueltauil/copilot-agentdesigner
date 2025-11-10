@@ -47,11 +47,18 @@ export function App() {
   const [state, setState] = useState<AppState | null>(null);
   const [showImportBanner, setShowImportBanner] = useState(false);
   const [importBannerMessage, setImportBannerMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const reactFlowInstance = useRef<any>(null);
 
   // Request initial state from extension
   useEffect(() => {
-    vscode.postMessage({ type: 'getState' });
+    console.log(`[Webview] [${Date.now()}] React App mounted, registering message listener`);
+    console.log(`[Webview] [${Date.now()}] Window size: ${window.innerWidth}x${window.innerHeight}`);
+    console.log(`[Webview] [${Date.now()}] Document ready state: ${document.readyState}`);
+    
+    // Signal to extension that webview is ready to receive state
+    console.log(`[Webview] [${Date.now()}] Sending webviewReady signal to extension`);
+    vscode.postMessage({ type: 'webviewReady' });
 
     // Listen for messages from extension
     const messageHandler = (event: MessageEvent) => {
@@ -59,6 +66,7 @@ export function App() {
       
       switch (message.type) {
         case 'stateLoaded':
+          console.log(`[Webview] [${Date.now()}] Received stateLoaded message with ${message.state?.agents?.length || 0} agents`);
           loadStateToCanvas(message.state);
           break;
         case 'exportRequested':
@@ -104,11 +112,19 @@ export function App() {
   }, []);
 
   const loadStateToCanvas = (canvasState: AppState) => {
-    console.log(`[Webview] loadStateToCanvas called with ${canvasState.agents?.length || 0} agents`);
+    console.log(`[Webview] [${Date.now()}] loadStateToCanvas called with ${canvasState?.agents?.length || 0} agents`);
+    
+    if (!canvasState) {
+      console.error(`[Webview] [${Date.now()}] Received null/undefined canvas state!`);
+      setIsLoading(false);
+      return;
+    }
+    
     setState(canvasState);
+    setIsLoading(false);
 
     if (!canvasState.agents || canvasState.agents.length === 0) {
-      console.log('[Webview] No agents to load, checking for existing agents');
+      console.log(`[Webview] [${Date.now()}] No agents to load, checking for existing agents`);
       // Check if agents exist but weren't loaded
       vscode.postMessage({ type: 'checkForAgents' });
       return;
@@ -133,8 +149,9 @@ export function App() {
 
     // Convert handoffs to edges
     const newEdges: Edge[] = [];
+    console.log(`[Webview] [${Date.now()}] Converting handoffs to edges`);
     canvasState.agents.forEach(agent => {
-      console.log(`[Webview] Agent ${agent.name} has ${agent.handoffs?.length || 0} handoffs:`, agent.handoffs);
+      console.log(`[Webview] [${Date.now()}] Agent ${agent.name} has ${agent.handoffs?.length || 0} handoffs:`, agent.handoffs);
       if (agent.handoffs) {
         agent.handoffs.forEach((handoff: any, index: number) => {
           console.log(`[Webview] Creating edge from ${agent.id} to ${handoff.targetAgentId}`);
@@ -152,9 +169,10 @@ export function App() {
       }
     });
 
-    console.log(`[Webview] Setting ${newNodes.length} nodes and ${newEdges.length} edges`);
+    console.log(`[Webview] [${Date.now()}] Setting ${newNodes.length} nodes and ${newEdges.length} edges`);
     setNodes(newNodes);
     setEdges(newEdges);
+    console.log(`[Webview] [${Date.now()}] Canvas state loaded successfully`);
   };
 
   const onConnect = useCallback(
@@ -448,6 +466,24 @@ export function App() {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'var(--vscode-editor-background)',
+          zIndex: 9999,
+          color: 'var(--vscode-foreground)',
+          fontSize: '14px'
+        }}>
+          Loading Agent Designer...
+        </div>
+      )}
       <ReactFlow
         nodes={nodes}
         edges={edges}

@@ -1330,7 +1330,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React8 = require_react(), Internals = {
+        var React9 = require_react(), Internals = {
           d: {
             f: noop2,
             r: function() {
@@ -1348,7 +1348,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = Symbol.for("react.portal"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = Symbol.for("react.portal"), ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -2883,7 +2883,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React8.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React9.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -18515,14 +18515,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React8 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React9 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = Symbol.for("react.element"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy");
         Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = Symbol.for("react.activity");
         Symbol.for("react.legacy_hidden");
         Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = Symbol.for("react.memo_cache_sentinel");
         Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -21310,7 +21310,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React8.version;
+          var isomorphicReactPackageVersion = React9.version;
           if ("19.2.0" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.0\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -21664,18 +21664,18 @@
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React8 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React9 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React9.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React8 = {
+        React9 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React8.react_stack_bottom_frame.bind(
-          React8,
+        var unknownOwnerDebugStack = React9.react_stack_bottom_frame.bind(
+          React9,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -21728,7 +21728,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React8.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React9.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -21776,8 +21776,8 @@
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React8 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState7 = React8.useState, useEffect5 = React8.useEffect, useLayoutEffect2 = React8.useLayoutEffect, useDebugValue2 = React8.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React8.useSyncExternalStore ? React8.useSyncExternalStore : shim;
+        var React9 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState7 = React9.useState, useEffect5 = React9.useEffect, useLayoutEffect2 = React9.useLayoutEffect, useDebugValue2 = React9.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React9.useSyncExternalStore ? React9.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -21804,7 +21804,7 @@
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React8 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef3 = React8.useRef, useEffect5 = React8.useEffect, useMemo2 = React8.useMemo, useDebugValue2 = React8.useDebugValue;
+        var React9 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef3 = React9.useRef, useEffect5 = React9.useEffect, useMemo2 = React9.useMemo, useDebugValue2 = React9.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef3(null);
           if (null === instRef.current) {
@@ -21875,7 +21875,7 @@
   });
 
   // webview-ui/src/index.tsx
-  var import_react11 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // webview-ui/src/App.tsx
@@ -31063,13 +31063,19 @@
     const [state, setState] = (0, import_react9.useState)(null);
     const [showImportBanner, setShowImportBanner] = (0, import_react9.useState)(false);
     const [importBannerMessage, setImportBannerMessage] = (0, import_react9.useState)("");
+    const [isLoading, setIsLoading] = (0, import_react9.useState)(true);
     const reactFlowInstance = (0, import_react9.useRef)(null);
     (0, import_react9.useEffect)(() => {
-      vscode.postMessage({ type: "getState" });
+      console.log(`[Webview] [${Date.now()}] React App mounted, registering message listener`);
+      console.log(`[Webview] [${Date.now()}] Window size: ${window.innerWidth}x${window.innerHeight}`);
+      console.log(`[Webview] [${Date.now()}] Document ready state: ${document.readyState}`);
+      console.log(`[Webview] [${Date.now()}] Sending webviewReady signal to extension`);
+      vscode.postMessage({ type: "webviewReady" });
       const messageHandler = (event) => {
         const message = event.data;
         switch (message.type) {
           case "stateLoaded":
+            console.log(`[Webview] [${Date.now()}] Received stateLoaded message with ${message.state?.agents?.length || 0} agents`);
             loadStateToCanvas(message.state);
             break;
           case "exportRequested":
@@ -31111,10 +31117,16 @@
       return () => window.removeEventListener("message", messageHandler);
     }, []);
     const loadStateToCanvas = (canvasState) => {
-      console.log(`[Webview] loadStateToCanvas called with ${canvasState.agents?.length || 0} agents`);
+      console.log(`[Webview] [${Date.now()}] loadStateToCanvas called with ${canvasState?.agents?.length || 0} agents`);
+      if (!canvasState) {
+        console.error(`[Webview] [${Date.now()}] Received null/undefined canvas state!`);
+        setIsLoading(false);
+        return;
+      }
       setState(canvasState);
+      setIsLoading(false);
       if (!canvasState.agents || canvasState.agents.length === 0) {
-        console.log("[Webview] No agents to load, checking for existing agents");
+        console.log(`[Webview] [${Date.now()}] No agents to load, checking for existing agents`);
         vscode.postMessage({ type: "checkForAgents" });
         return;
       }
@@ -31134,8 +31146,9 @@
         }
       }));
       const newEdges = [];
+      console.log(`[Webview] [${Date.now()}] Converting handoffs to edges`);
       canvasState.agents.forEach((agent) => {
-        console.log(`[Webview] Agent ${agent.name} has ${agent.handoffs?.length || 0} handoffs:`, agent.handoffs);
+        console.log(`[Webview] [${Date.now()}] Agent ${agent.name} has ${agent.handoffs?.length || 0} handoffs:`, agent.handoffs);
         if (agent.handoffs) {
           agent.handoffs.forEach((handoff, index2) => {
             console.log(`[Webview] Creating edge from ${agent.id} to ${handoff.targetAgentId}`);
@@ -31152,9 +31165,10 @@
           });
         }
       });
-      console.log(`[Webview] Setting ${newNodes.length} nodes and ${newEdges.length} edges`);
+      console.log(`[Webview] [${Date.now()}] Setting ${newNodes.length} nodes and ${newEdges.length} edges`);
       setNodes(newNodes);
       setEdges(newEdges);
+      console.log(`[Webview] [${Date.now()}] Canvas state loaded successfully`);
     };
     const onConnect = (0, import_react9.useCallback)(
       (params) => {
@@ -31392,6 +31406,20 @@
         onDragLeave: handleDragLeave,
         onDrop: handleDrop
       },
+      isLoading && /* @__PURE__ */ import_react9.default.createElement("div", { style: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "var(--vscode-editor-background)",
+        zIndex: 9999,
+        color: "var(--vscode-foreground)",
+        fontSize: "14px"
+      } }, "Loading Agent Designer..."),
       /* @__PURE__ */ import_react9.default.createElement(
         index,
         {
@@ -31565,11 +31593,108 @@
     );
   }
 
+  // webview-ui/src/ErrorBoundary.tsx
+  var import_react11 = __toESM(require_react());
+  var ErrorBoundary = class extends import_react11.default.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        hasError: false,
+        error: null,
+        errorInfo: null
+      };
+    }
+    static getDerivedStateFromError(error) {
+      return {
+        hasError: true,
+        error,
+        errorInfo: null
+      };
+    }
+    componentDidCatch(error, errorInfo) {
+      console.error(`[Webview] [${Date.now()}] React Error Boundary caught error:`, error);
+      console.error(`[Webview] [${Date.now()}] Component stack:`, errorInfo.componentStack);
+      this.setState({
+        error,
+        errorInfo
+      });
+      try {
+        const vscode2 = acquireVsCodeApi();
+        vscode2.postMessage({
+          type: "webviewError",
+          error: {
+            message: error.toString(),
+            stack: error.stack,
+            componentStack: errorInfo.componentStack
+          }
+        });
+      } catch (e) {
+        console.error("[Webview] Failed to send error to extension:", e);
+      }
+    }
+    render() {
+      if (this.state.hasError) {
+        return /* @__PURE__ */ import_react11.default.createElement("div", { style: {
+          padding: "20px",
+          color: "var(--vscode-errorForeground)",
+          backgroundColor: "var(--vscode-editor-background)",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "var(--vscode-font-family)"
+        } }, /* @__PURE__ */ import_react11.default.createElement("h2", { style: { marginBottom: "20px" } }, "\u26A0\uFE0F Agent Designer Error"), /* @__PURE__ */ import_react11.default.createElement("p", { style: { marginBottom: "10px", maxWidth: "600px", textAlign: "center" } }, "An error occurred while rendering the canvas. This has been logged for debugging."), /* @__PURE__ */ import_react11.default.createElement("details", { style: {
+          marginTop: "20px",
+          padding: "10px",
+          backgroundColor: "var(--vscode-editor-background)",
+          border: "1px solid var(--vscode-panel-border)",
+          borderRadius: "4px",
+          maxWidth: "800px",
+          width: "100%"
+        } }, /* @__PURE__ */ import_react11.default.createElement("summary", { style: { cursor: "pointer", fontWeight: "bold", marginBottom: "10px" } }, "Error Details"), /* @__PURE__ */ import_react11.default.createElement("pre", { style: {
+          whiteSpace: "pre-wrap",
+          fontSize: "12px",
+          overflow: "auto",
+          maxHeight: "400px"
+        } }, this.state.error?.toString(), "\n\n", this.state.error?.stack, "\n\nComponent Stack:", this.state.errorInfo?.componentStack)), /* @__PURE__ */ import_react11.default.createElement(
+          "button",
+          {
+            onClick: () => {
+              try {
+                const vscode2 = acquireVsCodeApi();
+                vscode2.postMessage({ type: "getState" });
+                this.setState({ hasError: false, error: null, errorInfo: null });
+              } catch (e) {
+                console.error("[Webview] Failed to reload:", e);
+                window.location.reload();
+              }
+            },
+            style: {
+              marginTop: "20px",
+              padding: "8px 16px",
+              backgroundColor: "var(--vscode-button-background)",
+              color: "var(--vscode-button-foreground)",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px"
+            }
+          },
+          "Reload Canvas"
+        ));
+      }
+      return this.props.children;
+    }
+  };
+
   // webview-ui/src/index.tsx
   var container = document.getElementById("root");
   if (container) {
     const root2 = (0, import_client.createRoot)(container);
-    root2.render(/* @__PURE__ */ import_react11.default.createElement(App, null));
+    root2.render(
+      /* @__PURE__ */ import_react12.default.createElement(ErrorBoundary, null, /* @__PURE__ */ import_react12.default.createElement(App, null))
+    );
   }
 })();
 /*! Bundled license information:

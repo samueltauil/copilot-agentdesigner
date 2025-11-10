@@ -58,6 +58,19 @@ export class AgentDesignerPanel {
         } else {
             const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
             if (!workspaceFolder) {
+                console.warn(`[AgentDesigner] [${Date.now()}] No workspace folder open, initializing with empty state`);
+                
+                // Initialize with empty state instead of disposing
+                this._stateFilePath = '';
+                this._canvasState = {
+                    version: '1.0.0',
+                    agents: [],
+                    theme: DEFAULT_THEME,
+                    preferences: DEFAULT_PREFERENCES,
+                    workflowDescription: ''
+                };
+                
+                // Show error but continue execution to set up webview properly
                 vscode.window.showErrorMessage(
                     'No workspace folder open. Please open a folder to use Agent Designer.',
                     'Open Folder'
@@ -66,15 +79,16 @@ export class AgentDesignerPanel {
                         vscode.commands.executeCommand('vscode.openFolder');
                     }
                 });
-                this.dispose();
-                return;
+                
+                // Continue execution - don't dispose or return
+            } else {
+                this._stateFilePath = path.join(
+                    workspaceFolder.uri.fsPath,
+                    '.github',
+                    'agentflow',
+                    '.agentdesign.md'
+                );
             }
-            this._stateFilePath = path.join(
-                workspaceFolder.uri.fsPath,
-                '.github',
-                'agentflow',
-                '.agentdesign.md'
-            );
         }
 
         // Check if we need to auto-import existing agents
@@ -85,15 +99,15 @@ export class AgentDesignerPanel {
         }
 
         // Set the webview's initial html content first
+        console.log(`[AgentDesigner] [${Date.now()}] Creating webview HTML`);
         this._update();
         
         // Load initial state
+        console.log(`[AgentDesigner] [${Date.now()}] Loading state from disk`);
         this._loadState();
         
-        // Send state to webview after a short delay to ensure it's ready
-        setTimeout(() => {
-            this._sendStateToWebview();
-        }, 100);
+        // Don't send state immediately - wait for webview to signal it's ready
+        console.log(`[AgentDesigner] [${Date.now()}] Waiting for webview ready signal`);
 
         // Listen for when the panel is disposed
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
@@ -135,6 +149,21 @@ export class AgentDesignerPanel {
                     case 'importExisting':
                         this._handleImportExisting();
                         break;
+                    case 'webviewReady':
+                        console.log(`[AgentDesigner] [${Date.now()}] Webview ready signal received`);
+                        this._sendStateToWebview();
+                        break;
+                    case 'webviewError':
+                        console.error(`[AgentDesigner] [${Date.now()}] Webview error:`, message.error);
+                        vscode.window.showErrorMessage(
+                            `Agent Designer webview error: ${message.error?.message || 'Unknown error'}`,
+                            'Show Details'
+                        ).then(selection => {
+                            if (selection === 'Show Details') {
+                                console.error('[AgentDesigner] Full error details:', message.error);
+                            }
+                        });
+                        break;
                 }
             },
             null,
@@ -143,11 +172,12 @@ export class AgentDesignerPanel {
     }
 
     private _checkForExistingAgents(): { needsImport: boolean; agentCount: number; sources: string[] } {
+        console.log(`[AgentDesigner] [${Date.now()}] Checking for existing agents`);
         const result = { needsImport: false, agentCount: 0, sources: [] as string[] };
 
         // If design file already exists, no need to auto-import
-        if (fs.existsSync(this._stateFilePath)) {
-            console.log('[AgentDesigner] Design file exists, skipping auto-import check');
+        if (this._stateFilePath && fs.existsSync(this._stateFilePath)) {
+            console.log(`[AgentDesigner] [${Date.now()}] Design file exists at ${this._stateFilePath}, skipping auto-import check`);
             return result;
         }
 
@@ -270,7 +300,13 @@ export class AgentDesignerPanel {
     }
 
     private _loadState() {
-        console.log(`[AgentDesigner] Loading state from: ${this._stateFilePath}`);
+        console.log(`[AgentDesigner] [${Date.now()}] Loading state from: ${this._stateFilePath}`);
+        
+        // Skip loading if no workspace (state already initialized in constructor)
+        if (!this._stateFilePath) {
+            console.log(`[AgentDesigner] [${Date.now()}] No state file path, using pre-initialized empty state`);
+            return;
+        }
         
         try {
             if (fs.existsSync(this._stateFilePath)) {
@@ -395,13 +431,23 @@ ${this._canvasState.workflowDescription || '# Agent Workflow\n\nDescribe your ag
     }
 
     private _sendStateToWebview() {
-        if (this._canvasState) {
-            console.log(`[AgentDesigner] Sending state to webview: ${this._canvasState.agents.length} agents`);
+        if (!this._canvasState) {
+            console.error(`[AgentDesigner] [${Date.now()}] Cannot send state: canvasState is undefined`);
+            return;
         }
-        this._panel.webview.postMessage({
+        
+        console.log(`[AgentDesigner] [${Date.now()}] Sending state to webview: ${this._canvasState.agents.length} agents`);
+        
+        const sent = this._panel.webview.postMessage({
             type: 'stateLoaded',
             state: this._canvasState
         });
+        
+        if (!sent) {
+            console.error(`[AgentDesigner] [${Date.now()}] Failed to send message to webview`);
+        } else {
+            console.log(`[AgentDesigner] [${Date.now()}] State message sent successfully`);
+        }
     }
 
     private async _handleExport() {
