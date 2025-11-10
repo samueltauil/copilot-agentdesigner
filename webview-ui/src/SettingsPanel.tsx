@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 interface SettingsPanelProps {
   preferences: {
-    fileFormat: 'chat.md' | 'chatmode.md';
+    fileFormat: 'agent.md' | 'chatmode.md';
     exportPath: 'agents' | 'chatmodes';
   };
   theme: {
@@ -51,8 +51,8 @@ export function SettingsPanel({ preferences, theme, onSave, onClose }: SettingsP
         <div className="form-group">
           <label>File Format:</label>
           <select value={fileFormat} onChange={(e) => setFileFormat(e.target.value as any)}>
-            <option value="chat.md">.chat.md (default)</option>
-            <option value="chatmode.md">.chatmode.md</option>
+            <option value="agent.md">.agent.md (recommended)</option>
+            <option value="chatmode.md">.chatmode.md (for chat modes)</option>
           </select>
         </div>
         

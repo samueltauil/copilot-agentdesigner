@@ -4,7 +4,8 @@
 .gitignore
 .yarnrc
 src/**
-webview-ui/**
+webview-ui/src/**
+webview-ui/tsconfig.json
 node_modules/**
 out/test/**
 vsc-extension-quickstart.md

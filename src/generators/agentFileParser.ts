@@ -17,31 +17,91 @@ export interface ParsedAgent {
 
 export class AgentFileParser {
     /**
+     * Extracts agent name from filename (e.g., "qa-analyst.agent.md" -> "QA Analyst")
+     */
+    public static extractAgentNameFromFilename(fileName: string): string {
+        // Remove file extension
+        const baseName = path.basename(fileName, path.extname(fileName));
+        // Remove .agent or .chatmode suffix
+        const cleanName = baseName.replace(/\.(agent|chatmode)$/, '');
+        // Replace hyphens and underscores with spaces, capitalize each word
+        return cleanName
+            .replace(/[-_]/g, ' ')
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+
+    /**
      * Parses agent file content and returns parsed data (not resolved yet)
      */
     public static parse(content: string, filePath: string): ParsedAgent | null {
         try {
-            const match = content.match(/^---\n([\s\S]*?)\n---/);
+            const fileName = path.basename(filePath);
+            
+            // Strip UTF-8 BOM if present
+            content = content.replace(/^\uFEFF/, '');
+            // Trim leading whitespace
+            content = content.trimStart();
+
+            // Try to match frontmatter with CRLF support
+            const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
 
             if (!match) {
-                throw new Error('No frontmatter found');
+                // No frontmatter found - use defaults
+                const agentName = this.extractAgentNameFromFilename(fileName);
+                console.log(`[Parser] No frontmatter in ${fileName}, using defaults`);
+                console.log(`[Parser] Extracted name from filename: "${agentName}"`);
+                console.log(`[Parser] Missing description, using empty string`);
+                console.log(`[Parser] Missing tools, using empty array`);
+                console.log(`[Parser] Missing model, using "Claude Sonnet 4"`);
+                console.warn(`[Parser] Agent "${agentName}" imported without description - user should add this in editor`);
+                console.warn(`[Parser] Agent "${agentName}" imported without instructions - user should add this in editor`);
+                
+                return {
+                    name: agentName,
+                    description: '',
+                    tools: [],
+                    model: 'Claude Sonnet 4',
+                    handoffs: []
+                };
             }
 
             const frontmatter = this.parseFrontmatter(match[1]);
-            const fileName = path.basename(filePath, path.extname(filePath));
+            const agentName = frontmatter.name || this.extractAgentNameFromFilename(fileName);
             
-            // Remove .agent or .chatmode from filename if present
-            const cleanFileName = fileName.replace(/\.(agent|chatmode)$/, '');
+            // Count fields and log what's present/missing
+            let fieldCount = 0;
+            const totalFields = 5;
+            
+            if (frontmatter.name) fieldCount++;
+            else console.log(`[Parser] Missing name in ${fileName}, using filename-derived: "${agentName}"`);
+            
+            if (frontmatter.description) fieldCount++;
+            else {
+                console.log(`[Parser] Missing description in ${fileName}, using empty string`);
+                console.warn(`[Parser] Agent "${agentName}" imported without description - user should add this in editor`);
+            }
+            
+            if (frontmatter.tools && frontmatter.tools.length > 0) fieldCount++;
+            else console.log(`[Parser] Missing tools in ${fileName}, using empty array`);
+            
+            if (frontmatter.model) fieldCount++;
+            else console.log(`[Parser] Missing model in ${fileName}, using "Claude Sonnet 4"`);
+            
+            if (frontmatter.handoffs && frontmatter.handoffs.length > 0) fieldCount++;
+            
+            console.log(`[Parser] Imported ${fileName} with ${fieldCount}/${totalFields} fields from frontmatter`);
 
             return {
-                name: frontmatter.name || this.nameFromFileName(cleanFileName),
+                name: agentName,
                 description: frontmatter.description || '',
                 tools: frontmatter.tools || [],
-                model: frontmatter.model || '',
+                model: frontmatter.model || 'Claude Sonnet 4',
                 handoffs: frontmatter.handoffs || []
             };
         } catch (error) {
-            console.error(`Failed to parse agent file:`, error);
+            console.error(`[Parser] Failed to parse agent file ${path.basename(filePath)}:`, error);
             return null;
         }
     }
@@ -84,32 +144,73 @@ export class AgentFileParser {
      */
     public static parseFile(filePath: string): ParsedAgent | null {
         try {
-            const content = fs.readFileSync(filePath, 'utf8');
-            const match = content.match(/^---\n([\s\S]*?)\n---/);
+            let content = fs.readFileSync(filePath, 'utf8');
+            const fileName = path.basename(filePath);
+            
+            // Strip UTF-8 BOM if present
+            content = content.replace(/^\uFEFF/, '');
+            // Trim leading whitespace
+            content = content.trimStart();
+
+            // Try to match frontmatter with CRLF support
+            const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
 
             if (!match) {
-                throw new Error('No frontmatter found');
+                // No frontmatter found - use defaults
+                const agentName = this.extractAgentNameFromFilename(fileName);
+                console.log(`[Parser] No frontmatter in ${fileName}, using defaults`);
+                console.log(`[Parser] Extracted name from filename: "${agentName}"`);
+                console.log(`[Parser] Missing description, using empty string`);
+                console.log(`[Parser] Missing tools, using empty array`);
+                console.log(`[Parser] Missing model, using "Claude Sonnet 4"`);
+                console.warn(`[Parser] Agent "${agentName}" imported without description - user should add this in editor`);
+                console.warn(`[Parser] Agent "${agentName}" imported without instructions - user should add this in editor`);
+                
+                return {
+                    name: agentName,
+                    description: '',
+                    tools: [],
+                    model: 'Claude Sonnet 4',
+                    handoffs: []
+                };
             }
 
             const frontmatter = this.parseFrontmatter(match[1]);
-            const fileName = path.basename(filePath, path.extname(filePath));
+            const agentName = frontmatter.name || this.extractAgentNameFromFilename(fileName);
             
-            // Remove .agent or .chatmode from filename if present
-            const cleanFileName = fileName.replace(/\.(agent|chatmode)$/, '');
+            // Count fields and log what's present/missing
+            let fieldCount = 0;
+            const totalFields = 5;
+            
+            if (frontmatter.name) fieldCount++;
+            else console.log(`[Parser] Missing name in ${fileName}, using filename-derived: "${agentName}"`);
+            
+            if (frontmatter.description) fieldCount++;
+            else {
+                console.log(`[Parser] Missing description in ${fileName}, using empty string`);
+                console.warn(`[Parser] Agent "${agentName}" imported without description - user should add this in editor`);
+            }
+            
+            if (frontmatter.tools && frontmatter.tools.length > 0) fieldCount++;
+            else console.log(`[Parser] Missing tools in ${fileName}, using empty array`);
+            
+            if (frontmatter.model) fieldCount++;
+            else console.log(`[Parser] Missing model in ${fileName}, using "Claude Sonnet 4"`);
+            
+            if (frontmatter.handoffs && frontmatter.handoffs.length > 0) fieldCount++;
+            
+            console.log(`[Parser] Imported ${fileName} with ${fieldCount}/${totalFields} fields from frontmatter`);
+            console.log(`[AgentFileParser] Parsed ${fileName}: ${frontmatter.handoffs?.length || 0} handoffs`);
 
-            const parsed = {
-                name: frontmatter.name || this.nameFromFileName(cleanFileName),
+            return {
+                name: agentName,
                 description: frontmatter.description || '',
                 tools: frontmatter.tools || [],
-                model: frontmatter.model || '',
+                model: frontmatter.model || 'Claude Sonnet 4',
                 handoffs: frontmatter.handoffs || []
             };
-            
-            console.log(`[AgentFileParser] Parsed ${fileName}: ${parsed.handoffs.length} handoffs`, parsed.handoffs);
-            
-            return parsed;
         } catch (error) {
-            console.error(`Failed to parse ${filePath}:`, error);
+            console.error(`[Parser] Failed to parse ${path.basename(filePath)}:`, error);
             return null;
         }
     }
@@ -238,17 +339,11 @@ export class AgentFileParser {
     }
 
     /**
-     * Converts filename to readable name
+     * Converts filename to readable name (legacy method, use extractAgentNameFromFilename)
+     * @deprecated Use extractAgentNameFromFilename instead
      */
     private static nameFromFileName(fileName: string): string {
-        // Remove .agent or .chatmode suffix first
-        const cleanName = fileName.replace(/\.(agent|chatmode)$/, '');
-        // Replace hyphens and underscores with spaces, then capitalize first letter of each word
-        return cleanName
-            .replace(/[-_]/g, ' ')
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
+        return this.extractAgentNameFromFilename(fileName);
     }
 
     /**

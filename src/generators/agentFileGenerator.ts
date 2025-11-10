@@ -62,6 +62,13 @@ ${body}
     }
 
     /**
+     * Converts agent name to filename prefix (e.g., "Project Manager" -> "project-manager")
+     */
+    private static nameToFilePrefix(name: string): string {
+        return name.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    /**
      * Generates YAML frontmatter
      */
     private static generateFrontmatter(agent: Agent, allAgents: Agent[]): string {
@@ -91,7 +98,9 @@ ${body}
             agent.handoffs.forEach(handoff => {
                 const targetAgent = allAgents.find(a => a.id === handoff.targetAgentId);
                 if (targetAgent) {
-                    lines.push(`  - agent: ${this.escapeYamlString(targetAgent.name)}`);
+                    // Use filename prefix derived from agent name for consistency with file names
+                    const filePrefix = this.nameToFilePrefix(targetAgent.name);
+                    lines.push(`  - agent: ${this.escapeYamlString(filePrefix)}`);
                     lines.push(`    label: ${this.escapeYamlString(handoff.label)}`);
                     if (handoff.prompt) {
                         lines.push(`    prompt: ${this.escapeYamlString(handoff.prompt)}`);

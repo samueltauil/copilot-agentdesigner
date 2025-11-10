@@ -64,7 +64,7 @@ function SettingsPanel({ preferences, theme, onSave, onClose }) {
         <div className="form-group">
           <label>File Format:</label>
           <select value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
-            <option value="chat.md">.chat.md (default)</option>
+            <option value="agent.md">.agent.md (default)</option>
             <option value="chatmode.md">.chatmode.md</option>
           </select>
         </div>

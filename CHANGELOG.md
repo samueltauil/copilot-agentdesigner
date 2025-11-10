@@ -2,6 +2,51 @@
 
 All notable changes to the "copilot-agentdesigner" extension will be documented in this file.
 
+## [0.5.2] - 2025-11-10
+
+### Added
+- **Real-Time Handoff Persistence**: Changes to handoff connections now persist immediately without requiring export
+  - Automatic file updates within 500ms of any canvas modification
+  - Individual `.agent.md` files update in real-time when handoffs are added/deleted
+  - No manual export needed - all changes saved automatically to disk
+  - Debounced updates prevent excessive file writes during rapid edits
+
+### Fixed
+- **Handoff Deletion**: Handoff connections can now be deleted properly with persistence
+  - Added "Delete Connection" button to handoff modal
+  - Right-click context menu on edges with "Delete Connection" option
+  - Confirmation dialog before deletion with destructive action styling
+  - Edge deletion immediately removes handoff from source agent's `.agent.md` file
+  - Fixed stale closure bug that prevented deletion from persisting
+  - All three deletion methods work: modal button, right-click menu, and confirmation dialog
+- **Handoff File Format**: Handoff references now use filename prefix instead of display name
+  - Exports use filename convention (e.g., `project-manager` instead of `Project Manager`)
+  - Consistent with file naming for easier import/reconstruction
+  - Parser supports both formats for backward compatibility
+  - Helper method converts agent names to filename prefixes automatically
+- **Extension Packaging**: Fixed missing webview build files in published extension
+  - Updated `.vscodeignore` to exclude source but include `webview-ui/build/`
+  - Resolves "ERR_ABORTED 404" errors for index.js and index.css
+  - Extension now loads correctly on all systems after installation
+
+### Changed
+- **Auto-Save Architecture**: State updates trigger both design file and agent file saves
+  - `_scheduleAutoSave()` saves `.agentdesign.md` (canvas state)
+  - `_scheduleAgentFilesUpdate()` saves individual `.agent.md` files (agent definitions)
+  - Both debounced at 500ms to batch rapid changes
+  - Logging shows which files are being updated
+
+### Technical
+- Created `webview-ui/src/ConfirmDialog.tsx`: Reusable confirmation dialog (56 lines)
+- Created `webview-ui/src/ConfirmDialog.css`: Dialog styling with destructive-button class
+- Created `webview-ui/src/EdgeContextMenu.tsx`: Right-click context menu for edges (79 lines)
+- Created `webview-ui/src/EdgeContextMenu.css`: Context menu styling with fade-in animation
+- Modified `webview-ui/src/HandoffModal.tsx`: Added onDelete prop and delete button
+- Modified `webview-ui/src/App.tsx`: Added deletion handlers, confirmation flow, direct save in setEdges callback
+- Modified `src/AgentDesignerPanel.ts`: Added `_scheduleAgentFilesUpdate()` and `_updateAgentFiles()` methods
+- Modified `src/generators/agentFileGenerator.ts`: Added `nameToFilePrefix()` helper, changed handoff format to use filename prefix
+- Modified `.vscodeignore`: Changed from `webview-ui/**` to `webview-ui/src/**` and `webview-ui/tsconfig.json`
+
 ## [0.5.1] - 2025-11-10
 
 ### Fixed
