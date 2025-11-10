@@ -2,7 +2,7 @@
   "name": "copilot-agentdesigner",
   "displayName": "Agent Designer",
   "description": "Visual canvas for designing multi-agent workflows. Create, connect, and export GitHub Copilot agents with an intuitive drag-and-drop interface.",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "publisher": "samueltauil",
   "author": {
     "name": "Samuel Tauil"

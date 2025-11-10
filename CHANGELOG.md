@@ -2,6 +2,53 @@
 
 All notable changes to the "copilot-agentdesigner" extension will be documented in this file.
 
+## [0.5.0] - 2025-11-10
+
+### Added
+- **Auto-Discovery of Existing Agents**: Extension now automatically detects and loads existing agent files
+  - Scans `.github/agents/` and `.github/chatmodes/` directories on startup
+  - Import banner appears when agents are found but canvas is empty
+  - "Load Now" button to import all discovered agents instantly
+  - "Dismiss" button to skip auto-import
+  - 5-second Undo notification after auto-import
+  - Grid layout with 250px spacing for auto-imported agents
+- **Support for .chatmode.md Files**: In addition to `.agent.md`, extension now recognizes `.chatmode.md` files
+  - Both file types parsed and loaded automatically
+  - Proper naming convention applied to both formats
+- **Multiple Handoffs per Agent**: YAML parser now supports array-based handoffs
+  - Agents can now have multiple handoff targets
+  - Array format: `handoffs: [{ agent: "qa", label: "Test" }, { agent: "pm", label: "Review" }]`
+  - Legacy single-object format still supported for backward compatibility
+
+### Fixed
+- **Handoff Resolution**: Fixed filename-based handoff mapping for proper connection display
+  - Maps both display names ("QA Analyst") and filename prefixes ("qa-analyst") to agent IDs
+  - Enhanced logging shows resolution attempts with ✓/✗ indicators
+  - Exact match first, then lowercase fallback for flexible matching
+- **Agent Name Formatting**: Fixed name extraction from filenames
+  - Properly strips `.agent` and `.chatmode` suffixes before formatting
+  - Capitalizes each word correctly (e.g., "qa-analyst.agent.md" → "QA Analyst")
+  - Handles hyphen and underscore separators
+- **Entry Point Detection**: Improved auto-detection logic
+  - Only marks agents as entry points when handoffs exist in workflow
+  - Otherwise leaves all as false for manual user selection
+  - Prevents over-marking agents as entry points
+
+### Changed
+- **Enhanced Debug Logging**: Comprehensive console logging for troubleshooting
+  - Shows all available name mappings before handoff resolution
+  - Logs each handoff resolution attempt with success/failure
+  - Displays handoff counts and connection details for each agent
+  - File parsing logs show handoff count per agent
+- **Improved Error Handling**: Constructor no longer throws, better error recovery
+- **State Management**: Updated parseDirectory() to return `{agents, fileNames}` structure
+
+### Technical
+- Modified `src/generators/agentFileParser.ts`: Rewrote YAML parser to handle handoff arrays, added filename mapping
+- Modified `src/AgentDesignerPanel.ts`: Added auto-discovery logic, import banner messaging, Undo notifications
+- Modified `webview-ui/src/App.tsx`: Added import banner UI, checkForAgents message handling
+- All handoff resolution now uses dual-key mapping (display name + filename prefix)
+
 ## [0.4.1] - 2025-11-08
 
 ### Changed
